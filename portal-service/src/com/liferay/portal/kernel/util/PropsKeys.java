@@ -989,6 +989,8 @@ public interface PropsKeys {
 
 	public static final String JPA_PROVIDER_PROPERTY_PREFIX = "jpa.provider.property.";
 
+	public static final String JSON_DESERIALIZER_STRICT_MODE = "json.deserializer.strict.mode";
+
 	public static final String JSON_SERVICE_INVALID_CLASS_NAMES = "json.service.invalid.class.names";
 
 	public static final String JSON_WEB_SERVICE_ENABLED = "json.web.service.enabled";
