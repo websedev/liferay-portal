@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.io.FileFilter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
@@ -136,60 +138,99 @@ public class TempFileUtil {
 			long userId, String fileName, String tempPathName)
 		throws PortalException {
 
-		String absoluteFilePath = getTempAbsolutePath(
-			userId, fileName, tempPathName);
+		try {
+			String absoluteFilePath = getTempAbsolutePath(
+				userId, fileName, tempPathName);
 
-		return new File(absoluteFilePath);
+			return new File(absoluteFilePath);
+		}
+		catch (TempFileNameException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to return file " + fileName + " for " + userId +
+						" in " + tempPathName,
+					e);
+			}
+
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static File getTempFile(String fileName, String tempPathName)
 		throws PortalException {
 
-		String absoluteFilePath = getTempAbsolutePath(fileName, tempPathName);
+		try {
+			String absoluteFilePath = getTempAbsolutePath(
+				fileName, tempPathName);
 
-		return new File(absoluteFilePath);
+			return new File(absoluteFilePath);
+		}
+		catch (TempFileNameException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to return file " + fileName + " in " +
+						tempPathName,
+					e);
+			}
+
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static String[] getTempFileEntryNames(
 		long userId, String tempPathName) {
 
-		File dir = new File(getTempAbsolutePath(tempPathName));
+		try {
+			File dir = new File(getTempAbsolutePath(tempPathName));
 
-		StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(5);
 
-		sb.append(StringPool.PERIOD);
-		sb.append(StringPool.STAR);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(userId);
-		sb.append(_SUFFIX_TEMP_FILENAME_USERID_REGEX);
+			sb.append(StringPool.PERIOD);
+			sb.append(StringPool.STAR);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(userId);
+			sb.append(_SUFFIX_TEMP_FILENAME_USERID_REGEX);
 
-		FileFilter fileFilter = new FileFilter(sb.toString());
+			FileFilter fileFilter = new FileFilter(sb.toString());
 
-		File[] files = dir.listFiles(fileFilter);
+			File[] files = dir.listFiles(fileFilter);
 
-		int count = 0;
+			int count = 0;
 
-		if (files != null) {
-			count = files.length;
+			if (files != null) {
+				count = files.length;
+			}
+
+			String[] fileNames = new String[count];
+
+			for (int i = 0; i < count; i++) {
+				File file = files[i];
+
+				String fileName = StringUtil.replace(
+					file.getName(),
+					StringPool.UNDERLINE + userId + _SUFFIX_TEMP_FILENAME,
+					StringPool.BLANK);
+
+				fileNames[i] = fileName;
+			}
+
+			return fileNames;
 		}
+		catch (TempFileNameException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to list temporary file names for " + userId +
+						" in " + tempPathName,
+					e);
+			}
 
-		String[] fileNames = new String[count];
-
-		for (int i = 0; i < count; i++) {
-			File file = files[i];
-
-			String fileName = StringUtil.replace(
-				file.getName(),
-				StringPool.UNDERLINE + userId + _SUFFIX_TEMP_FILENAME,
-				StringPool.BLANK);
-
-			fileNames[i] = fileName;
+			return new String[0];
 		}
-
-		return fileNames;
 	}
 
-	public static String[] getTempFileEntryNames(String tempPathName) {
+	public static String[] getTempFileEntryNames(String tempPathName)
+		throws TempFileNameException {
+
 		File dir = new File(getTempAbsolutePath(tempPathName));
 
 		File[] files = dir.listFiles(
@@ -220,9 +261,47 @@ public class TempFileUtil {
 		return true;
 	}
 
+	protected static void validatePathName(String pathName)
+		throws TempFileNameException {
+
+		if (pathName == null) {
+			return;
+		}
+
+		if (pathName.indexOf(_NULL_CHAR) > -1) {
+			throw new TempFileNameException();
+		}
+
+		int pos = pathName.indexOf(StringPool.DOUBLE_PERIOD);
+
+		if (pos > -1) {
+			if (pathName.length() == 2) {
+				throw new TempFileNameException();
+			}
+
+			if (pos > 0) {
+				char c = pathName.charAt(pos - 1);
+
+				if ((c == CharPool.BACK_SLASH) || (c == CharPool.SLASH)) {
+					throw new TempFileNameException();
+				}
+			}
+
+			if ((pos + 2) < pathName.length()) {
+				char c = pathName.charAt(pos + 2);
+
+				if ((c == CharPool.BACK_SLASH) || (c == CharPool.SLASH)) {
+					throw new TempFileNameException();
+				}
+			}
+		}
+	}
+
 	private static String getTempAbsolutePath(
 			long userId, String fileName, String tempPathName)
 		throws PortalException {
+
+		validatePathName(tempPathName);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -235,7 +314,11 @@ public class TempFileUtil {
 		return sb.toString();
 	}
 
-	private static String getTempAbsolutePath(String tempPathName) {
+	private static String getTempAbsolutePath(String tempPathName)
+		throws TempFileNameException {
+
+		validatePathName(tempPathName);
+
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
@@ -249,6 +332,8 @@ public class TempFileUtil {
 	private static String getTempAbsolutePath(
 			String fileName, String tempPathName)
 		throws PortalException {
+
+		validatePathName(tempPathName);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -290,11 +375,15 @@ public class TempFileUtil {
 
 	private static final String _BASE_TEMP_PATHNAME = "/liferay/";
 
+	private static final char _NULL_CHAR = 0;
+
 	private static final String _SUFFIX_TEMP_FILENAME = "_temp.tmp";
 
 	private static final String _SUFFIX_TEMP_FILENAME_REGEX = ".*_temp\\.tmp";
 
 	private static final String _SUFFIX_TEMP_FILENAME_USERID_REGEX =
 		"_temp\\.tmp";
+
+	private static Log _log = LogFactoryUtil.getLog(TempFileUtil.class);
 
 }
