@@ -511,6 +511,7 @@ Liferay.Service.registerClass(
 	{
 		addEntry: true,
 		deleteEntry: true,
+		getEntry: true,
 		updateEntry: true
 	}
 );
