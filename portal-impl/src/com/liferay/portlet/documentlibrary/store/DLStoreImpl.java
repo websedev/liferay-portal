@@ -204,6 +204,8 @@ public class DLStoreImpl implements DLStore {
 	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
+		validate(fileName, false);
+
 		store.deleteFile(companyId, repositoryId, fileName);
 	}
 
@@ -211,6 +213,8 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException, SystemException {
+
+		validate(fileName, false);
 
 		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
