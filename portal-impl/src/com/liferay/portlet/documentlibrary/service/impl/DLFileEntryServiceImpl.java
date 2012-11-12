@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -475,8 +476,14 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		DLFileEntryPermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
+			permissionChecker, fileEntryId, ActionKeys.UPDATE);
+
+		DLFolderPermission.check(
+			permissionChecker, serviceContext.getScopeGroupId(), newFolderId,
+			ActionKeys.ADD_DOCUMENT);
 
 		return dlFileEntryLocalService.moveFileEntry(
 			getUserId(), fileEntryId, newFolderId, serviceContext);
