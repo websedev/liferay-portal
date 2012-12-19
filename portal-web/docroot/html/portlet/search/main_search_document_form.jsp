@@ -54,7 +54,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 		}
 		%>
 
-		<%= name %>
+		<%= HtmlUtil.escape(name) %>
 	</span>
 
 	<%
