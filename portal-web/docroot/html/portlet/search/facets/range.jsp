@@ -48,7 +48,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 					Liferay.Search.tokenList.add(
 						{
 							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
-							text: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
+							text: '<%= UnicodeLanguageUtil.get(pageContext, HtmlUtil.escape(label)) %>'
 						}
 					);
 				</aui:script>

@@ -63,7 +63,7 @@ if (Validator.isNotNull(fieldParam)) {
 		Liferay.Search.tokenList.add(
 			{
 				clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
-				text: '<%= UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fieldParamFrom + "</strong>", "<strong>" + fieldParamTo + "</strong>"}) %>'
+				html: '<%= UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + HtmlUtil.escape(fieldParamFrom) + "</strong>", "<strong>" + HtmlUtil.escape(fieldParamTo) + "</strong>"}) %>'
 			}
 		);
 	</aui:script>
