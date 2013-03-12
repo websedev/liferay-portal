@@ -34,8 +34,9 @@ catch (Exception e) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= (company2 == null) %>"
-	title='<%= (company2 == null) ? "new-portal-instance" : company2.getName() %>'
+	title='<%= (company2 == null) ? "new-portal-instance" : HtmlUtil.escape(company2.getName()) %>'
 />
 
 <portlet:actionURL var="editInstanceURL">
@@ -60,7 +61,7 @@ catch (Exception e) {
 			</aui:field-wrapper>
 
 			<aui:field-wrapper label="web-id">
-				<%= company2.getWebId() %>
+				<%= HtmlUtil.escape(company2.getWebId()) %>
 			</aui:field-wrapper>
 		</c:if>
 

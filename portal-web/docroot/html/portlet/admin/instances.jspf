@@ -65,7 +65,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Web ID
 
-	row.addText(company2.getWebId(), rowURL);
+	row.addText(HtmlUtil.escape(company2.getWebId()), rowURL);
 
 	// Virtual Host
 
