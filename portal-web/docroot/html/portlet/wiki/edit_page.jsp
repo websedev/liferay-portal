@@ -148,6 +148,13 @@ if (Validator.isNull(redirect)) {
 		wikiPage = new WikiPageImpl();
 	}
 
+	try {
+		content = SanitizerUtil.sanitize(themeDisplay.getCompanyId(), scopeGroupId, themeDisplay.getUserId(), WikiPage.class.getName(), 0, "text/" + format, content);
+	}
+	catch (SanitizerException se) {
+		content = StringPool.BLANK;
+	}
+
 	wikiPage.setContent(content);
 	wikiPage.setFormat(format);
 	%>
