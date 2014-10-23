@@ -140,7 +140,7 @@ public class AUIUtil {
 
 		if (showForLabel) {
 			sb.append("for=\"");
-			sb.append(forLabel);
+			sb.append(HtmlUtil.escapeAttribute(forLabel));
 			sb.append("\"");
 		}
 
