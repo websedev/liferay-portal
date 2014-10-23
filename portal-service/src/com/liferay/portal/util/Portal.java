@@ -1153,6 +1153,8 @@ public interface Portal {
 	public String getUserValue(long userId, String param, String defaultValue)
 		throws SystemException;
 
+	public String getValidPortalDomain(long companyId, String domain);
+
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException, SystemException;
 

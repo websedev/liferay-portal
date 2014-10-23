@@ -113,6 +113,7 @@ import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.TicketConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
@@ -142,6 +143,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.TicketLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
@@ -770,26 +772,8 @@ public class PortalImpl implements Portal {
 			domain = domain.substring(0, pos);
 		}
 
-		try {
-			Company company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-				domain);
-
-			if (company != null) {
-				return url;
-			}
-		}
-		catch (Exception e) {
-		}
-
-		try {
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-				domain);
-
-			if (layoutSet != null) {
-				return url;
-			}
-		}
-		catch (Exception e) {
+		if (isValidVirtualHost(domain) || isValidVirtualHostname(domain)) {
+			return url;
 		}
 
 		try {
@@ -3882,9 +3866,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(PortletRequest portletRequest, boolean secure) {
-		return getPortalURL(
-			portletRequest.getServerName(), portletRequest.getServerPort(),
-			secure);
+		long companyId = getCompanyId(portletRequest);
+
+		String domain = getValidPortalDomain(
+			companyId, portletRequest.getServerName());
+
+		return getPortalURL(domain, portletRequest.getServerPort(), secure);
 	}
 
 	@Override
@@ -5518,6 +5505,56 @@ public class PortalImpl implements Portal {
 		catch (PortalException pe) {
 			return StringPool.BLANK;
 		}
+	}
+
+	@Override
+	public String getValidPortalDomain(long companyId, String domain) {
+		if (Validator.isHostName(domain)) {
+			if (isValidVirtualHost(domain)) {
+				return domain;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					domain, PropsValues.WEB_SERVER_HOST)) {
+
+				return PropsValues.WEB_SERVER_HOST;
+			}
+
+			if (isValidVirtualHostname(domain)) {
+				return domain;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					domain, getCDNHostHttp(companyId))) {
+
+				return domain;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					domain, getCDNHostHttps(companyId))) {
+
+				return domain;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Set the property \"" + PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS +
+					"\" in portal.properties to allow \"" + domain +
+						"\" as a domain");
+		}
+
+		try {
+			Company company = CompanyLocalServiceUtil.getCompanyById(
+				getDefaultCompanyId());
+
+			return company.getVirtualHostname();
+		}
+		catch (Exception e) {
+			_log.error("Unable to load default portal instance!", e);
+		}
+
+		return _LOCALHOST;
 	}
 
 	@Override
@@ -7601,6 +7638,37 @@ public class PortalImpl implements Portal {
 				panelSelectedPortlets);
 
 			return ArrayUtil.contains(panelSelectedPortletsArray, portletId);
+		}
+
+		return false;
+	}
+
+	protected boolean isValidVirtualHost(String domain) {
+		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
+				StringUtil.wildcardMatches(
+					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, false)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isValidVirtualHostname(String virtualHostname) {
+		try {
+			virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
+
+			VirtualHost virtualHost =
+				VirtualHostLocalServiceUtil.fetchVirtualHost(virtualHostname);
+
+			if (virtualHost != null) {
+				return true;
+			}
+		}
+		catch (Exception e) {
 		}
 
 		return false;
