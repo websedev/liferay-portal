@@ -32,17 +32,17 @@ if (classPK > 0) {
 
 	<ul class="property-list">
 
-	<%
-	for (Phone phone: phones) {
-	%>
+		<%
+		for (Phone phone : phones) {
+		%>
 
-		<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-			<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
-		</li>
+			<li class="<%= phone.isPrimary() ? "primary" : "" %>">
+				<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+			</li>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
 	</ul>
 </c:if>
