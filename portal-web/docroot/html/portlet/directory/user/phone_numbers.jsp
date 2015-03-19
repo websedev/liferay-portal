@@ -46,17 +46,17 @@ for (int i = 0; i < organizations.size(); i++) {
 
 		<ul class="property-list">
 
-		<%
-		for (Phone phone: organizationPhones) {
-		%>
+			<%
+			for (Phone phone : organizationPhones) {
+			%>
 
-			<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-				<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
-			</li>
+				<li class="<%= phone.isPrimary() ? "primary" : "" %>">
+					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+				</li>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
 		</ul>
 	</c:if>
@@ -66,17 +66,17 @@ for (int i = 0; i < organizations.size(); i++) {
 
 		<ul class="property-list">
 
-		<%
-		for (Phone phone: personalPhones) {
-		%>
+			<%
+			for (Phone phone : personalPhones) {
+			%>
 
-			<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-				<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
-			</li>
+				<li class="<%= phone.isPrimary() ? "primary" : "" %>">
+					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+				</li>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
 		</ul>
 	</c:if>
