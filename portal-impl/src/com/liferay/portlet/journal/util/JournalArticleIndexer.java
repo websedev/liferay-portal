@@ -79,11 +79,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
 
-	public static boolean JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
-		GetterUtil.getBoolean(PropsUtil.get(
-			"journal.articles.index.all.versions"));
-
 	public static final String PORTLET_ID = PortletKeys.JOURNAL;
+
+	public static boolean JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
+		GetterUtil.getBoolean(
+			PropsUtil.get("journal.articles.index.all.versions"));
 
 	public JournalArticleIndexer() {
 		setFilterSearch(true);
@@ -692,6 +692,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return languageIds;
 	}
 
+	@Override
+	protected String getPortletId(SearchContext searchContext) {
+		return PORTLET_ID;
+	}
+
 	protected boolean isHead(JournalArticle article) throws SystemException {
 		if (!JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 			return true;
@@ -714,11 +719,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return false;
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexArticles(long companyId)

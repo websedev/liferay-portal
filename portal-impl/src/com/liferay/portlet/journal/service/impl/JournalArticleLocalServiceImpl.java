@@ -1374,23 +1374,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestArticle(
-			long resourcePrimKey, int[] statuses)
-		throws SystemException {
-
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
-
-		List<JournalArticle> articles = journalArticlePersistence.findByR_ST(
-			resourcePrimKey, statuses, 0, 1, orderByComparator);
-
-		if (!articles.isEmpty()) {
-			return articles.get(0);
-		}
-
-		return null;
-	}
-
-	@Override
-	public JournalArticle fetchLatestArticle(
 			long resourcePrimKey, int status, boolean preferApproved)
 		throws SystemException {
 
@@ -1417,6 +1400,23 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return article;
+	}
+
+	@Override
+	public JournalArticle fetchLatestArticle(
+			long resourcePrimKey, int[] statuses)
+		throws SystemException {
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		List<JournalArticle> articles = journalArticlePersistence.findByR_ST(
+			resourcePrimKey, statuses, 0, 1, orderByComparator);
+
+		if (!articles.isEmpty()) {
+			return articles.get(0);
+		}
+
+		return null;
 	}
 
 	@Override

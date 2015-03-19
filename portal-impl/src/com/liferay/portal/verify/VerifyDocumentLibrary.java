@@ -444,21 +444,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		return mimeType;
 	}
 
-	protected void updateClassNameId() {
-		try {
-			runSQL(
-				"update DLFileEntry set classNameId = 0 where classNameId is " +
-					"null");
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to fix file entries where class name ID is null",
-					e);
-			}
-		}
-	}
-
 	protected void removeOrphanedDLFileEntries() throws Exception {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getOrphanedFileEntries();
@@ -554,6 +539,21 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			_log.debug(
 				"Invalid title " + title + " renamed to " + newTitle +
 					" for file entry " + dlFileEntry.getFileEntryId());
+		}
+	}
+
+	protected void updateClassNameId() {
+		try {
+			runSQL(
+				"update DLFileEntry set classNameId = 0 where classNameId is " +
+					"null");
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fix file entries where class name ID is null",
+					e);
+			}
 		}
 	}
 

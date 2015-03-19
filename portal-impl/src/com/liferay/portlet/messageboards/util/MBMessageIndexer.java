@@ -55,9 +55,10 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.service.persistence.MBCategoryActionableDynamicQuery;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageActionableDynamicQuery;
 
-import javax.portlet.PortletURL;
 import java.util.List;
 import java.util.Locale;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Brian Wing Shun Chan

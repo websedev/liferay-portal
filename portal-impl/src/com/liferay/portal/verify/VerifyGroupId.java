@@ -163,6 +163,8 @@ public class VerifyGroupId extends VerifyProcess {
 		}
 	};
 
+	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
+
 	private class VerifiableGroupedModelRunnable
 		extends ThrowableAwareRunnable {
 
@@ -189,7 +191,5 @@ public class VerifyGroupId extends VerifyProcess {
 		private final String _relatedPKColumnName;
 
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
 
 }
