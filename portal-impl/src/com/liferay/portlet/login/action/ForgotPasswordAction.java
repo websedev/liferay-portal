@@ -85,15 +85,18 @@ public class ForgotPasswordAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof CaptchaTextException ||
-				e instanceof NoSuchUserException ||
-				e instanceof RequiredReminderQueryException ||
-				e instanceof SendPasswordException ||
-				e instanceof UserActiveException ||
-				e instanceof UserEmailAddressException ||
-				e instanceof UserLockoutException ||
-				e instanceof UserReminderQueryException) {
+				e instanceof UserEmailAddressException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof NoSuchUserException ||
+					 e instanceof RequiredReminderQueryException ||
+					 e instanceof SendPasswordException ||
+					 e instanceof UserActiveException ||
+					 e instanceof UserLockoutException ||
+					 e instanceof UserReminderQueryException) {
+
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				PortalUtil.sendError(e, actionRequest, actionResponse);
