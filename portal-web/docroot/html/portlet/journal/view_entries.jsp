@@ -278,7 +278,7 @@ for (int i = 0; i < results.size(); i++) {
 							cssClass="entry-display-style selectable"
 							image="../file_system/small/html"
 							label="<%= true %>"
-							message="<%= curArticle.getTitle(locale) %>"
+							message="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
 							method="get"
 							url="<%= rowURL.toString() %>"
 						/>
