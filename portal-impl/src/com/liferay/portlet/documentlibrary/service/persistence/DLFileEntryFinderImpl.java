@@ -812,15 +812,6 @@ public class DLFileEntryFinderImpl
 	}
 
 	protected String getFileEntriesSQL(
-		String id, long groupId, List<Long> folderIds, String[] mimeTypes,
-		QueryDefinition queryDefinition, boolean inlineSQLHelper) {
-
-		return getFileEntriesSQL(
-			id, groupId, null, folderIds, mimeTypes, queryDefinition,
-			inlineSQLHelper);
-	}
-
-	protected String getFileEntriesSQL(
 		String id, long groupId, List<Long> repositoryIds, List<Long> folderIds,
 		String[] mimeTypes, QueryDefinition queryDefinition,
 		boolean inlineSQLHelper) {
@@ -879,6 +870,15 @@ public class DLFileEntryFinderImpl
 		else {
 			return StringUtil.replace(sql, "[$FOLDER_ID$]", StringPool.BLANK);
 		}
+	}
+
+	protected String getFileEntriesSQL(
+		String id, long groupId, List<Long> folderIds, String[] mimeTypes,
+		QueryDefinition queryDefinition, boolean inlineSQLHelper) {
+
+		return getFileEntriesSQL(
+			id, groupId, null, folderIds, mimeTypes, queryDefinition,
+			inlineSQLHelper);
 	}
 
 	protected String getFolderIds(List<Long> folderIds, String tableName) {

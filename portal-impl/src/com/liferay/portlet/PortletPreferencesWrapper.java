@@ -35,7 +35,7 @@ public class PortletPreferencesWrapper
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public PortletPreferencesWrapper(
 		PortletPreferences portletPreferences, String lifecycle) {

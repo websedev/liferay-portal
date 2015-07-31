@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -126,6 +126,39 @@ public class StagingIndexingBackgroundTaskExecutor
 		return BackgroundTaskResult.SUCCESS;
 	}
 
+	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("Indexing failed after importing with the following error: ");
+		sb.append(e.getMessage());
+		sb.append(StringPool.PERIOD);
+		sb.append(StringPool.SPACE);
+		sb.append("Please reindex site manually.");
+
+		String message = sb.toString();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(message);
+		}
+
+		return message;
+	}
+
+	protected boolean containsValue(Map<?, ?> map, long value) {
+		if ((map == null) || map.isEmpty() || (value <= 0)) {
+			return false;
+		}
+
+		for (Object object : map.values()) {
+			if (GetterUtil.getLong(object) == value) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected void reindexDDMStructures(
 			List<Long> ddmStructureIds,
 			Map<String, Map<?, ?>> newPrimaryKeysMaps, long groupId)
@@ -222,39 +255,6 @@ public class StagingIndexingBackgroundTaskExecutor
 
 			dlFileEntryIndexer.reindex(dlFileEntry);
 		}
-	}
-
-	protected boolean containsValue(Map<?, ?> map, long value) {
-		if ((map == null) || map.isEmpty() || (value <= 0)) {
-			return false;
-		}
-
-		for (Object object : map.values()) {
-			if (GetterUtil.getLong(object) == value) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("Indexing failed after importing with the following error: ");
-		sb.append(e.getMessage());
-		sb.append(StringPool.PERIOD);
-		sb.append(StringPool.SPACE);
-		sb.append("Please reindex site manually.");
-
-		String message = sb.toString();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(message);
-		}
-
-		return message;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

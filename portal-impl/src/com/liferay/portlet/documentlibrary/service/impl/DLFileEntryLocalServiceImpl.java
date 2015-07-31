@@ -1084,16 +1084,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition queryDefinition)
-		throws Exception {
-
-		return dlFileEntryFinder.findByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition);
-	}
-
-	@Override
-	public List<DLFileEntry> getFileEntries(
 			long groupId, long userId, List<Long> repositoryIds,
 			List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
@@ -1102,6 +1092,16 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.findByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition);
+	}
+
+	@Override
+	public List<DLFileEntry> getFileEntries(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.findByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition);
 	}
 
 	@Override
@@ -1147,16 +1147,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition queryDefinition)
-		throws Exception {
-
-		return dlFileEntryFinder.countByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition);
-	}
-
-	@Override
-	public int getFileEntriesCount(
 			long groupId, long userId, List<Long> repositoryIds,
 			List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
@@ -1165,6 +1155,16 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.countByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.countByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition);
 	}
 
 	@Override
@@ -1722,6 +1722,52 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
+	}
+
+	@Override
+	public void validateFile(
+			long groupId, long folderId, long fileEntryId, String title,
+			String extension)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
+			groupId, folderId, title);
+
+		if (dlFolder != null) {
+			throw new DuplicateFolderNameException(title);
+		}
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
+			groupId, folderId, title);
+
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId)) {
+
+			throw new DuplicateFileException(title);
+		}
+
+		if (Validator.isNull(extension)) {
+			return;
+		}
+
+		String periodAndExtension = StringPool.PERIOD.concat(extension);
+
+		if (title.endsWith(periodAndExtension)) {
+			title = FileUtil.stripExtension(title);
+		}
+		else {
+			title += periodAndExtension;
+		}
+
+		dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
+			groupId, folderId, title);
+
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId) &&
+			extension.equals(dlFileEntry.getExtension())) {
+
+			throw new DuplicateFileException(title);
+		}
 	}
 
 	@Override
@@ -2477,52 +2523,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileVersion;
-	}
-
-	@Override
-	public void validateFile(
-			long groupId, long folderId, long fileEntryId, String title,
-			String extension)
-		throws PortalException, SystemException {
-
-		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
-			groupId, folderId, title);
-
-		if (dlFolder != null) {
-			throw new DuplicateFolderNameException(title);
-		}
-
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-			groupId, folderId, title);
-
-		if ((dlFileEntry != null) &&
-			(dlFileEntry.getFileEntryId() != fileEntryId)) {
-
-			throw new DuplicateFileException(title);
-		}
-
-		if (Validator.isNull(extension)) {
-			return;
-		}
-
-		String periodAndExtension = StringPool.PERIOD.concat(extension);
-
-		if (title.endsWith(periodAndExtension)) {
-			title = FileUtil.stripExtension(title);
-		}
-		else {
-			title += periodAndExtension;
-		}
-
-		dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-			groupId, folderId, title);
-
-		if ((dlFileEntry != null) &&
-			(dlFileEntry.getFileEntryId() != fileEntryId) &&
-			extension.equals(dlFileEntry.getExtension())) {
-
-			throw new DuplicateFileException(title);
-		}
 	}
 
 	protected void validateFile(

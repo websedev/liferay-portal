@@ -126,8 +126,6 @@ public interface PortletDataContext extends Serializable {
 			String namespace)
 		throws PortalException, SystemException;
 
-	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps();
-
 	public void addComments(Class<?> clazz, long classPK)
 		throws SystemException;
 
@@ -334,6 +332,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<?, ?> getNewPrimaryKeysMap(String className);
 
+	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps();
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */
@@ -345,8 +345,6 @@ public interface PortletDataContext extends Serializable {
 	public Map<String, List<KeyValuePair>> getPermissions();
 
 	public long getPlid();
-
-	public String getRootPortletId();
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -403,6 +401,8 @@ public interface PortletDataContext extends Serializable {
 	 *             ExportImportPathUtil#getRootPath(PortletDataContext)}
 	 */
 	public String getRootPath();
+
+	public String getRootPortletId();
 
 	/**
 	 * @deprecated As of 7.0.0

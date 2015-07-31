@@ -293,10 +293,10 @@ public class SAXReaderUtil {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SAXReaderUtil.class);
-
 	private static final String[] _XML_SECURITY_WHITELIST = PropsUtil.getArray(
 		PropsKeys.XML_SECURITY_WHITELIST);
+
+	private static Log _log = LogFactoryUtil.getLog(SAXReaderUtil.class);
 
 	private static SAXReader _saxReader;
 	private static SAXReader _unsecureSAXReader;

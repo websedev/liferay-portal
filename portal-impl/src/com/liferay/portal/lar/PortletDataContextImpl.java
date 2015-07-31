@@ -1098,11 +1098,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps() {
-		return _newPrimaryKeysMaps;
-	}
-
-	@Override
 	public Map<?, ?> getNewPrimaryKeysMap(String className) {
 		Map<?, ?> map = _newPrimaryKeysMaps.get(className);
 
@@ -1113,6 +1108,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return map;
+	}
+
+	@Override
+	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps() {
+		return _newPrimaryKeysMaps;
 	}
 
 	/**
@@ -1137,11 +1137,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public long getPlid() {
 		return _plid;
-	}
-
-	@Override
-	public String getRootPortletId() {
-		return _rootPortletId;
 	}
 
 	@Override
@@ -1291,6 +1286,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public String getRootPath() {
 		return ExportImportPathUtil.getRootPath(this);
+	}
+
+	@Override
+	public String getRootPortletId() {
+		return _rootPortletId;
 	}
 
 	/**
@@ -2692,12 +2692,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 		new HashMap<String, List<KeyValuePair>>();
 	private long _plid;
 	private transient PortletDataContextListener _portletDataContextListener;
-	private String _rootPortletId;
 	private Set<String> _primaryKeys = new HashSet<String>();
 	private boolean _privateLayout;
 	private transient Map<String, List<RatingsEntry>> _ratingsEntriesMap =
 		new HashMap<String, List<RatingsEntry>>();
 	private Set<String> _references = new HashSet<String>();
+	private String _rootPortletId;
 	private Set<String> _scopedPrimaryKeys = new HashSet<String>();
 	private long _scopeGroupId;
 	private String _scopeLayoutUuid;

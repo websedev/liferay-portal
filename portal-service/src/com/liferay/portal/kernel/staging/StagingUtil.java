@@ -246,6 +246,18 @@ public class StagingUtil {
 			locale, e, contextMap);
 	}
 
+	public static Date getLastPublishDate(LayoutSet layoutSet)
+		throws PortalException {
+
+		return getStaging().getLastPublishDate(layoutSet);
+	}
+
+	public static Date getLastPublishDate(
+		PortletPreferences jxPortletPreferences) {
+
+		return getStaging().getLastPublishDate(jxPortletPreferences);
+	}
+
 	public static Group getLiveGroup(long groupId)
 		throws PortalException, SystemException {
 
@@ -521,18 +533,6 @@ public class StagingUtil {
 
 		getStaging().updateLastPublishDate(
 			sourceGroupId, privateLayout, dateRange, lastPublishDate);
-	}
-
-	public static Date getLastPublishDate(LayoutSet layoutSet)
-		throws PortalException {
-
-		return getStaging().getLastPublishDate(layoutSet);
-	}
-
-	public static Date getLastPublishDate(
-		PortletPreferences jxPortletPreferences) {
-
-		return getStaging().getLastPublishDate(jxPortletPreferences);
 	}
 
 	public static void updateLastPublishDate(

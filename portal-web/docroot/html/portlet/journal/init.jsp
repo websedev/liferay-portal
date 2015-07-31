@@ -49,7 +49,6 @@ page import="com.liferay.portlet.journal.FeedNameException" %><%@
 page import="com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException" %><%@
 page import="com.liferay.portlet.journal.FeedTargetPortletIdException" %><%@
 page import="com.liferay.portlet.journal.FolderNameException" %><%@
-page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticleResource" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeed" %><%@
@@ -72,7 +71,6 @@ page import="com.liferay.portlet.journal.service.permission.JournalFeedPermissio
 page import="com.liferay.portlet.journal.service.permission.JournalFolderPermission" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalPermission" %><%@
 page import="com.liferay.portlet.journal.util.JournalConverterUtil" %><%@
-page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
 page import="com.liferay.util.RSSUtil" %>
 
 <%

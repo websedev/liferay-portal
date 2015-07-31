@@ -314,6 +314,26 @@ public class DDMStructureStagedModelDataHandler
 			structure.getStructureKey(), importedStructure.getStructureKey());
 	}
 
+	protected DDMStructure getExistingStructure(
+			String uuid, long groupId, long classNameId, String structureKey,
+			boolean preloaded)
+		throws Exception {
+
+		DDMStructure existingStructure = null;
+
+		if (!preloaded) {
+			existingStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+					uuid, groupId);
+		}
+		else {
+			existingStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				groupId, classNameId, structureKey);
+		}
+
+		return existingStructure;
+	}
+
 	protected boolean isModifiedStructure(
 		DDMStructure existingStructure, DDMStructure structure) {
 
@@ -354,26 +374,6 @@ public class DDMStructureStagedModelDataHandler
 		}
 
 		return false;
-	}
-
-	protected DDMStructure getExistingStructure(
-			String uuid, long groupId, long classNameId, String structureKey,
-			boolean preloaded)
-		throws Exception {
-
-		DDMStructure existingStructure = null;
-
-		if (!preloaded) {
-			existingStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-					uuid, groupId);
-		}
-		else {
-			existingStructure = DDMStructureLocalServiceUtil.fetchStructure(
-				groupId, classNameId, structureKey);
-		}
-
-		return existingStructure;
 	}
 
 	protected void prepareLanguagesForImport(DDMStructure structure)

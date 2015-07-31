@@ -4661,16 +4661,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
-			HttpServletRequest request)
-		throws SystemException {
-
-		return getCategoriesMap(
-			request, WebKeys.SITE_ADMINISTRATION_CATEGORIES_MAP,
-			PortletCategoryKeys.SITE_ADMINISTRATION_ALL);
-	}
-
-	@Override
 	public long[] getSharedContentSiteGroupIds(
 			long companyId, long groupId, long userId)
 		throws PortalException, SystemException {
@@ -4736,6 +4726,16 @@ public class PortalImpl implements Portal {
 		}
 
 		return groupIds;
+	}
+
+	@Override
+	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException {
+
+		return getCategoriesMap(
+			request, WebKeys.SITE_ADMINISTRATION_CATEGORIES_MAP,
+			PortletCategoryKeys.SITE_ADMINISTRATION_ALL);
 	}
 
 	@Override
@@ -5608,6 +5608,16 @@ public class PortalImpl implements Portal {
 		}
 
 		return userId;
+	}
+
+	public String getVirtualHostname(LayoutSet layoutSet) {
+		String virtualHostname = layoutSet.getVirtualHostname();
+
+		if (Validator.isNull(virtualHostname)) {
+			virtualHostname = layoutSet.getCompanyFallbackVirtualHostname();
+		}
+
+		return virtualHostname;
 	}
 
 	@Override
@@ -7667,16 +7677,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
-	}
-
-	public String getVirtualHostname(LayoutSet layoutSet) {
-		String virtualHostname = layoutSet.getVirtualHostname();
-
-		if (Validator.isNull(virtualHostname)) {
-			virtualHostname = layoutSet.getCompanyFallbackVirtualHostname();
-		}
-
-		return virtualHostname;
 	}
 
 	protected boolean isAlwaysAllowDoAsUser(HttpServletRequest request)

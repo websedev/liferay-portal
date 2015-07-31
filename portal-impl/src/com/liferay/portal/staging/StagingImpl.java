@@ -2016,6 +2016,37 @@ public class StagingImpl implements Staging {
 		}
 	}
 
+	protected static boolean isValidDateRange(
+		DateRange dateRange, Date originalLastPublishDate) {
+
+		if (dateRange == null) {
+
+			// This is a valid scenario when publishing all
+
+			return true;
+		}
+
+		Date startDate = dateRange.getStartDate();
+		Date endDate = dateRange.getEndDate();
+
+		if (originalLastPublishDate != null) {
+			if ((startDate != null) &&
+				startDate.after(originalLastPublishDate)) {
+
+				return false;
+			}
+
+			if ((endDate != null) && endDate.before(originalLastPublishDate)) {
+				return false;
+			}
+		}
+		else if ((startDate != null) || (endDate != null)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected void deleteRecentLayoutRevisionId(
 		PortalPreferences portalPreferences, long layoutSetBranchId,
 		long plid) {
@@ -2174,37 +2205,6 @@ public class StagingImpl implements Staging {
 		return ParamUtil.getString(
 			portletRequest, param,
 			GetterUtil.getString(group.getTypeSettingsProperty(param)));
-	}
-
-	protected static boolean isValidDateRange(
-		DateRange dateRange, Date originalLastPublishDate) {
-
-		if (dateRange == null) {
-
-			// This is a valid scenario when publishing all
-
-			return true;
-		}
-
-		Date startDate = dateRange.getStartDate();
-		Date endDate = dateRange.getEndDate();
-
-		if (originalLastPublishDate != null) {
-			if ((startDate != null) &&
-				startDate.after(originalLastPublishDate)) {
-
-				return false;
-			}
-
-			if ((endDate != null) && endDate.before(originalLastPublishDate)) {
-				return false;
-			}
-		}
-		else if ((startDate != null) || (endDate != null)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	protected void publishLayouts(

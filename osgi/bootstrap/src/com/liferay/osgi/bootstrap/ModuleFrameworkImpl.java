@@ -755,6 +755,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return new File(fileName);
 	}
 
+	private String _getLiferayLibPortalDir() {
+		String liferayLibPortalDir = PropsValues.LIFERAY_LIB_PORTAL_DIR;
+
+		if (liferayLibPortalDir.startsWith(StringPool.SLASH)) {
+			liferayLibPortalDir = liferayLibPortalDir.substring(1);
+		}
+
+		return liferayLibPortalDir;
+	}
+
 	private String _getSystemPackagesExtra() {
 		File coreDir = new File(
 			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
@@ -950,16 +960,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
-	}
-
-	private String _getLiferayLibPortalDir() {
-		String liferayLibPortalDir = PropsValues.LIFERAY_LIB_PORTAL_DIR;
-
-		if (liferayLibPortalDir.startsWith(StringPool.SLASH)) {
-			liferayLibPortalDir = liferayLibPortalDir.substring(1);
-		}
-
-		return liferayLibPortalDir;
 	}
 
 	private void _processURL(

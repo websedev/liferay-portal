@@ -89,6 +89,38 @@ public class DeletionSystemEventImporter {
 		xmlReader.parse(new InputSource(new StringReader(xml)));
 	}
 
+	protected void doImportDeletionSystemEvents(
+		PortletDataContext portletDataContext, Element element) {
+
+		Set<StagedModelType> stagedModelTypes =
+			portletDataContext.getDeletionSystemEventStagedModelTypes();
+
+		StagedModelType stagedModelType = new StagedModelType(
+			element.attributeValue("class-name"),
+			element.attributeValue("referrer-class-name"));
+
+		if (!stagedModelTypes.contains(stagedModelType)) {
+			return;
+		}
+
+		try {
+			StagedModelDataHandlerUtil.deleteStagedModel(
+				portletDataContext, element);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Unable to process deletion for ");
+				sb.append(stagedModelType);
+				sb.append(" with UUID ");
+				sb.append(element.attributeValue("uuid"));
+
+				_log.warn(sb.toString());
+			}
+		}
+	}
+
 	protected void initDeletionSystemEventStagedModelTypes(
 		PortletDataContext portletDataContext) {
 
@@ -170,38 +202,6 @@ public class DeletionSystemEventImporter {
 				portletDataContext.addDeletionSystemEventStagedModelTypes(
 					portletDataHandler.
 						getDeletionSystemEventStagedModelTypes());
-			}
-		}
-	}
-
-	protected void doImportDeletionSystemEvents(
-		PortletDataContext portletDataContext, Element element) {
-
-		Set<StagedModelType> stagedModelTypes =
-			portletDataContext.getDeletionSystemEventStagedModelTypes();
-
-		StagedModelType stagedModelType = new StagedModelType(
-			element.attributeValue("class-name"),
-			element.attributeValue("referrer-class-name"));
-
-		if (!stagedModelTypes.contains(stagedModelType)) {
-			return;
-		}
-
-		try {
-			StagedModelDataHandlerUtil.deleteStagedModel(
-				portletDataContext, element);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("Unable to process deletion for ");
-				sb.append(stagedModelType);
-				sb.append(" with UUID ");
-				sb.append(element.attributeValue("uuid"));
-
-				_log.warn(sb.toString());
 			}
 		}
 	}

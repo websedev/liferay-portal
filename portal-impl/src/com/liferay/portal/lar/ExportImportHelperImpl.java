@@ -159,47 +159,6 @@ import org.xml.sax.XMLReader;
 public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
-	public void reindex(PortletDataContext portletDataContext, long userId)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>();
-
-		PortletDataContext clonedPortletDataContext =
-			PortletDataContextFactoryUtil.clonePortletDataContext(
-				portletDataContext);
-
-		Map<String, Map<?, ?>> newPrimaryKeysMaps =
-			clonedPortletDataContext.getNewPrimaryKeysMaps();
-
-		for (String key : _EXTRANEOUS_REINDEX_PRIMARY_KEYS_MAPS_KEYS) {
-			newPrimaryKeysMaps.remove(key);
-		}
-
-		Map<Long, Long> structureIds = (Map<Long, Long>)newPrimaryKeysMaps.get(
-			DDMStructure.class.getName());
-		Map<Long, Long> structureIdsUnmodified =
-			(Map<Long, Long>)newPrimaryKeysMaps.get(
-				DDMStructure.class + ".unmodified");
-
-		if ((structureIdsUnmodified != null) && (structureIds != null)) {
-			for (Long structureIdUnmodified : structureIdsUnmodified.keySet()) {
-				structureIds.remove(structureIdUnmodified);
-			}
-
-			newPrimaryKeysMaps.remove(DDMStructure.class + ".unmodified");
-		}
-
-		taskContextMap.put("portletDataContext", clonedPortletDataContext);
-		taskContextMap.put("userId", userId);
-
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
-			userId, clonedPortletDataContext.getGroupId(), StringPool.BLANK,
-			null, StagingIndexingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
-	}
-
-	@Override
 	public Calendar getCalendar(
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive) {
@@ -571,6 +530,47 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return TempFileUtil.getTempFile(
 			groupId, userId, tempFileEntryNames[0],
 			DigesterUtil.digestHex(Digester.SHA_256, folderName));
+	}
+
+	@Override
+	public void reindex(PortletDataContext portletDataContext, long userId)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		PortletDataContext clonedPortletDataContext =
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext);
+
+		Map<String, Map<?, ?>> newPrimaryKeysMaps =
+			clonedPortletDataContext.getNewPrimaryKeysMaps();
+
+		for (String key : _EXTRANEOUS_REINDEX_PRIMARY_KEYS_MAPS_KEYS) {
+			newPrimaryKeysMaps.remove(key);
+		}
+
+		Map<Long, Long> structureIds = (Map<Long, Long>)newPrimaryKeysMaps.get(
+			DDMStructure.class.getName());
+		Map<Long, Long> structureIdsUnmodified =
+			(Map<Long, Long>)newPrimaryKeysMaps.get(
+				DDMStructure.class + ".unmodified");
+
+		if ((structureIdsUnmodified != null) && (structureIds != null)) {
+			for (Long structureIdUnmodified : structureIdsUnmodified.keySet()) {
+				structureIds.remove(structureIdUnmodified);
+			}
+
+			newPrimaryKeysMaps.remove(DDMStructure.class + ".unmodified");
+		}
+
+		taskContextMap.put("portletDataContext", clonedPortletDataContext);
+		taskContextMap.put("userId", userId);
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, clonedPortletDataContext.getGroupId(), StringPool.BLANK,
+			null, StagingIndexingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
 	}
 
 	@Override

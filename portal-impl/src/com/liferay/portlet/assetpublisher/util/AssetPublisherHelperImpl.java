@@ -34,15 +34,6 @@ import javax.portlet.PortletURL;
  */
 public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
-	@Override
-	public String getAssetViewURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
-
-		return getAssetViewURL(
-			liferayPortletRequest, liferayPortletResponse, assetEntry, false);
-	}
-
 	public static String getAssetViewURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry,
@@ -113,6 +104,15 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			assetEntry, viewInContext, viewURL, currentURL, themeDisplay, true);
 
 		return viewURL;
+	}
+
+	@Override
+	public String getAssetViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
+
+		return getAssetViewURL(
+			liferayPortletRequest, liferayPortletResponse, assetEntry, false);
 	}
 
 }

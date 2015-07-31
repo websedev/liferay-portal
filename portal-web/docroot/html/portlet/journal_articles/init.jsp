@@ -16,9 +16,6 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
-page import="com.liferay.portlet.journal.util.JournalUtil" %>
-
 <%
 long groupId = GetterUtil.getLong(portletPreferences.getValue("groupId", String.valueOf(themeDisplay.getScopeGroupId())));
 String ddmStructureKey = portletPreferences.getValue("ddmStructureKey", StringPool.BLANK);

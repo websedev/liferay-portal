@@ -83,11 +83,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
 
+	public static final String PORTLET_ID = PortletKeys.JOURNAL;
+
 	public static boolean JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
 		GetterUtil.getBoolean(
 			PropsUtil.get("journal.articles.index.all.versions"));
-
-	public static final String PORTLET_ID = PortletKeys.JOURNAL;
 
 	public JournalArticleIndexer() {
 		setFilterSearch(true);

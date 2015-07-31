@@ -689,6 +689,18 @@ public class DDMXSDImpl implements DDMXSD {
 		return fieldContext;
 	}
 
+	protected String getFieldNamespace(
+		String fieldDisplayValue, DDMFieldsCounter ddmFieldsCounter,
+		int offset) {
+
+		String[] fieldsDisplayValues = StringUtil.split(fieldDisplayValue);
+
+		String fieldsDisplayValue = fieldsDisplayValues[offset];
+
+		return StringUtil.extractLast(
+			fieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+	}
+
 	protected int getFieldOffset(
 		String[] fieldsDisplayValues, String name, int index) {
 
@@ -705,18 +717,6 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return offset;
-	}
-
-	protected String getFieldNamespace(
-		String fieldDisplayValue, DDMFieldsCounter ddmFieldsCounter,
-		int offset) {
-
-		String[] fieldsDisplayValues = StringUtil.split(fieldDisplayValue);
-
-		String fieldsDisplayValue = fieldsDisplayValues[offset];
-
-		return StringUtil.extractLast(
-			fieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
 	}
 
 	protected Map<String, Map<String, Object>> getFieldsContext(

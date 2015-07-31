@@ -87,30 +87,6 @@ public class VerifyJournal extends VerifyProcess {
 		verifyURLTitle();
 	}
 
-	protected void updateDynamicElements(List<Element> dynamicElements)
-		throws PortalException, SystemException {
-
-		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
-
-		for (Element dynamicElement : dynamicElements) {
-			updateDynamicElements(dynamicElement.elements("dynamic-element"));
-
-			String name = dynamicElement.attributeValue("name");
-
-			int index = ddmFieldsCounter.get(name);
-
-			dynamicElement.addAttribute("index", String.valueOf(index));
-
-			String type = dynamicElement.attributeValue("type");
-
-			if (type.equals("image")) {
-				updateImageElement(dynamicElement, name, index);
-			}
-
-			ddmFieldsCounter.incrementKey(name);
-		}
-	}
-
 	protected void updateDocumentLibraryElements(Element element)
 		throws Exception {
 
@@ -154,6 +130,30 @@ public class VerifyJournal extends VerifyProcess {
 		Node node = dynamicContentElement.node(0);
 
 		node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
+	}
+
+	protected void updateDynamicElements(List<Element> dynamicElements)
+		throws PortalException, SystemException {
+
+		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
+
+		for (Element dynamicElement : dynamicElements) {
+			updateDynamicElements(dynamicElement.elements("dynamic-element"));
+
+			String name = dynamicElement.attributeValue("name");
+
+			int index = ddmFieldsCounter.get(name);
+
+			dynamicElement.addAttribute("index", String.valueOf(index));
+
+			String type = dynamicElement.attributeValue("type");
+
+			if (type.equals("image")) {
+				updateImageElement(dynamicElement, name, index);
+			}
+
+			ddmFieldsCounter.incrementKey(name);
+		}
 	}
 
 	protected void updateElement(long groupId, Element element)

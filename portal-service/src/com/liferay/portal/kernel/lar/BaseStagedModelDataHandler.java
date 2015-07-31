@@ -41,8 +41,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	implements StagedModelDataHandler<T> {
 
 	public static final int STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY =
-		GetterUtil.getInteger(PropsUtil.get(
-			"staging.hibernate.cache.flush.frequency"));
+		GetterUtil.getInteger(
+			PropsUtil.get("staging.hibernate.cache.flush.frequency"));
 
 	@Override
 	public abstract void deleteStagedModel(
@@ -177,26 +177,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 	}
 
-	protected void maintainSessionCache(PortletDataContext portletDataContext) {
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
-		int hibernateCacheFlushFrequency =
-			STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY;
-
-		if ((manifestSummary.getModelAdditionCount() %
-				hibernateCacheFlushFrequency) != 0) {
-
-			return;
-		}
-
-		Session session = sessionFactory.getCurrentSession();
-
-		session.flush();
-
-		session.clear();
-	}
-
 	@Override
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
@@ -263,6 +243,26 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws Exception {
 
 		throw new UnsupportedOperationException();
+	}
+
+	protected void maintainSessionCache(PortletDataContext portletDataContext) {
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		int hibernateCacheFlushFrequency =
+			STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY;
+
+		if ((manifestSummary.getModelAdditionCount() %
+				hibernateCacheFlushFrequency) != 0) {
+
+			return;
+		}
+
+		Session session = sessionFactory.getCurrentSession();
+
+		session.flush();
+
+		session.clear();
 	}
 
 	protected void validateExport(

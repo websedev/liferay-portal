@@ -126,8 +126,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SitesImpl implements Sites {
 
 	public static final boolean LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO =
-		GetterUtil.getBoolean(PropsUtil.get(
-			"layout.set.prototype.propagate.logo"));
+		GetterUtil.getBoolean(
+			PropsUtil.get("layout.set.prototype.propagate.logo"));
 
 	@Override
 	public void addMergeFailFriendlyURLLayout(Layout layout)
