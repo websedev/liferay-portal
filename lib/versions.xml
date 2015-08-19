@@ -1823,6 +1823,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/portal/guice.jar</file-name>
+		<version>3.0</version>
+		<project-name>Guice</project-name>
+		<project-url>https://code.google.com/p/google-guice/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/portal/hessian.jar</file-name>
 		<version>4.0.3</version>
 		<project-name>Hessian</project-name>
@@ -2083,6 +2095,18 @@
 			<license>
 				<license-name>LGPL 2.1</license-name>
 				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>lib/portal/javax.inject.jar</file-name>
+		<version>1</version>
+		<project-name>Dependency Injection for Java</project-name>
+		<project-url>http://code.google.com/p/atinject/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2838,7 +2862,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/openid4java.jar</file-name>
-		<version>0.9.5.593</version>
+		<version>0.9.8</version>
 		<project-name>OpenID 4 Java</project-name>
 		<project-url>http://code.google.com/p/openid4java</project-url>
 		<licenses>
