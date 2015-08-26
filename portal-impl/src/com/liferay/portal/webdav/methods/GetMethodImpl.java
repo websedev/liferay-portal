@@ -15,6 +15,7 @@
 package com.liferay.portal.webdav.methods;
 
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtilResult;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -64,7 +65,7 @@ public class GetMethodImpl implements Method {
 			if (is != null) {
 				String fileName = resource.getDisplayName();
 
-				FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+				FlashMagicBytesUtilResult flashMagicBytesUtilResult =
 					FlashMagicBytesUtil.check(is);
 
 				if (flashMagicBytesUtilResult.isFlash()) {

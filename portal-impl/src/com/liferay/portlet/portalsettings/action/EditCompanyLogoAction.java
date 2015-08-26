@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtilResult;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -146,7 +147,7 @@ public class EditCompanyLogoAction extends PortletAction {
 				FileEntry tempFileEntry = getTempImageFileEntry(
 					resourceRequest);
 
-				FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+				FlashMagicBytesUtilResult flashMagicBytesUtilResult =
 					FlashMagicBytesUtil.check(tempFileEntry.getContentStream());
 
 				if (flashMagicBytesUtilResult.isFlash()) {

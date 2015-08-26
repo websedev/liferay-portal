@@ -26,7 +26,9 @@ import java.io.PushbackInputStream;
  */
 public class FlashMagicBytesUtil {
 
-	public static Result check(InputStream inputStream) throws IOException {
+	public static FlashMagicBytesUtilResult check(InputStream inputStream)
+		throws IOException {
+
 		PushbackInputStream pushbackInputStream = new PushbackInputStream(
 			inputStream, 3);
 
@@ -35,7 +37,7 @@ public class FlashMagicBytesUtil {
 		int length = pushbackInputStream.read(magicBytes);
 
 		if (length < 0) {
-			return new Result(false, inputStream);
+			return new FlashMagicBytesUtilResult(false, inputStream);
 		}
 
 		pushbackInputStream.unread(magicBytes, 0, length);
@@ -46,31 +48,12 @@ public class FlashMagicBytesUtil {
 			ArrayUtil.containsAll(_FLASH_MAGIC_BYTES[1], magicBytes) ||
 			ArrayUtil.containsAll(_FLASH_MAGIC_BYTES[2], magicBytes)) {
 
-			return new Result(true, inputStream);
+			return new FlashMagicBytesUtilResult(true, inputStream);
 		}
 
-		return new Result(false, inputStream);
+		return new FlashMagicBytesUtilResult(false, inputStream);
 	}
 
-	public static class Result {
-
-		public InputStream getInputStream() {
-			return _inputStream;
-		}
-
-		public boolean isFlash() {
-			return _flash;
-		}
-
-		private Result(boolean flash, InputStream inputStream) {
-			_flash = flash;
-			_inputStream = inputStream;
-		}
-
-		private final boolean _flash;
-		private final InputStream _inputStream;
-
-	}
 
 	private static final byte[][] _FLASH_MAGIC_BYTES =
 		{{0x46, 0x57, 0x53}, {0x43, 0x57, 0x53}, {0x5a, 0x57, 0x53}};

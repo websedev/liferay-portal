@@ -17,6 +17,7 @@ package com.liferay.portal.webserver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtilResult;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1021,7 +1022,7 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+		FlashMagicBytesUtilResult flashMagicBytesUtilResult =
 			FlashMagicBytesUtil.check(inputStream);
 
 		if (flashMagicBytesUtilResult.isFlash()) {
@@ -1202,7 +1203,7 @@ public class WebServerServlet extends HttpServlet {
 
 		InputStream is = fileEntry.getContentStream();
 
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+		FlashMagicBytesUtilResult flashMagicBytesUtilResult =
 			FlashMagicBytesUtil.check(is);
 
 		is = flashMagicBytesUtilResult.getInputStream();

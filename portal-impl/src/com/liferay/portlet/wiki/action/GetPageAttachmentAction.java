@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtilResult;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -136,7 +137,7 @@ public class GetPageAttachmentAction extends PortletAction {
 
 		InputStream is = fileEntry.getContentStream();
 
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+		FlashMagicBytesUtilResult flashMagicBytesUtilResult =
 			FlashMagicBytesUtil.check(is);
 
 		if (flashMagicBytesUtilResult.isFlash()) {

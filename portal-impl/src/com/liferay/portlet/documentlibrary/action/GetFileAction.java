@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtilResult;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -285,7 +286,7 @@ public class GetFileAction extends PortletAction {
 			}
 		}
 
-		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+		FlashMagicBytesUtilResult flashMagicBytesUtilResult =
 			FlashMagicBytesUtil.check(is);
 
 		if (flashMagicBytesUtilResult.isFlash()) {
