@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -43,6 +45,19 @@ public class TunnelServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) || !permissionChecker.isSignedIn()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unauthenticated access is forbidden");
+			}
+
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+			return;
+		}
 
 		ObjectInputStream ois;
 
