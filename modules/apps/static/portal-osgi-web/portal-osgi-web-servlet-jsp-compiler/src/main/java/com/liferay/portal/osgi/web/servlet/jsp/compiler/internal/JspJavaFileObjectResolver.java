@@ -253,7 +253,9 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 							String entryPathString = entryPath.toString();
 
-							if (entryPathString.startsWith(File.separator)) {
+							if (entryPathString.charAt(0) ==
+									File.separatorChar) {
+
 								entryPathString = entryPathString.substring(1);
 							}
 
