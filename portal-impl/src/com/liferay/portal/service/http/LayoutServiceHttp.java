@@ -1356,12 +1356,53 @@ public class LayoutServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Layout>
-		getLayouts(HttpPrincipal httpPrincipal, long groupId, String type) {
+			getLayouts(
+				HttpPrincipal httpPrincipal, long groupId,
+				boolean privateLayout, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayouts",
 				_getLayoutsParameterTypes33);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, privateLayout, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List<com.liferay.portal.kernel.model.Layout>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Layout>
+		getLayouts(HttpPrincipal httpPrincipal, long groupId, String type) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutServiceUtil.class, "getLayouts",
+				_getLayoutsParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type);
@@ -1394,7 +1435,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayouts",
-				_getLayoutsParameterTypes34);
+				_getLayoutsParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type, start, end);
@@ -1425,7 +1466,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes35);
+				_getLayoutsCountParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout);
@@ -1456,7 +1497,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes36);
+				_getLayoutsCountParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId);
@@ -1487,7 +1528,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes37);
+				_getLayoutsCountParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId, priority);
@@ -1517,7 +1558,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes38);
+				_getLayoutsCountParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type);
@@ -1548,7 +1589,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getTempFileNames",
-				_getTempFileNamesParameterTypes39);
+				_getTempFileNamesParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderName);
@@ -1587,7 +1628,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "hasLayout",
-				_hasLayoutParameterTypes40);
+				_hasLayoutParameterTypes41);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, uuid, groupId, privateLayout);
@@ -1625,7 +1666,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "hasPortletId",
-				_hasPortletIdParameterTypes41);
+				_hasPortletIdParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, portletId);
@@ -1666,7 +1707,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayouts",
-				_importLayoutsParameterTypes42);
+				_importLayoutsParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, file);
@@ -1703,7 +1744,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayouts",
-				_importLayoutsParameterTypes43);
+				_importLayoutsParameterTypes44);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, is);
@@ -1738,7 +1779,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayouts",
-				_importLayoutsParameterTypes44);
+				_importLayoutsParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parameterMap, bytes);
@@ -1773,7 +1814,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayouts",
-				_importLayoutsParameterTypes45);
+				_importLayoutsParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parameterMap, file);
@@ -1809,7 +1850,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayouts",
-				_importLayoutsParameterTypes46);
+				_importLayoutsParameterTypes47);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parameterMap, is);
@@ -1845,7 +1886,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayoutsInBackground",
-				_importLayoutsInBackgroundParameterTypes47);
+				_importLayoutsInBackgroundParameterTypes48);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, taskName, groupId, privateLayout, parameterMap,
@@ -1886,7 +1927,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importLayoutsInBackground",
-				_importLayoutsInBackgroundParameterTypes48);
+				_importLayoutsInBackgroundParameterTypes49);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, taskName, groupId, privateLayout, parameterMap,
@@ -1928,7 +1969,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfo",
-				_importPortletInfoParameterTypes49);
+				_importPortletInfoParameterTypes50);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, file);
@@ -1965,7 +2006,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfo",
-				_importPortletInfoParameterTypes50);
+				_importPortletInfoParameterTypes51);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, is);
@@ -2001,7 +2042,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfo",
-				_importPortletInfoParameterTypes51);
+				_importPortletInfoParameterTypes52);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, groupId, portletId, parameterMap, file);
@@ -2037,7 +2078,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfo",
-				_importPortletInfoParameterTypes52);
+				_importPortletInfoParameterTypes53);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, groupId, portletId, parameterMap, is);
@@ -2072,7 +2113,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfo",
-				_importPortletInfoParameterTypes53);
+				_importPortletInfoParameterTypes54);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, portletId, parameterMap, file);
@@ -2108,7 +2149,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfo",
-				_importPortletInfoParameterTypes54);
+				_importPortletInfoParameterTypes55);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, portletId, parameterMap, is);
@@ -2144,7 +2185,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfoInBackground",
-				_importPortletInfoInBackgroundParameterTypes55);
+				_importPortletInfoInBackgroundParameterTypes56);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, taskName, plid, groupId, portletId, parameterMap,
@@ -2186,7 +2227,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfoInBackground",
-				_importPortletInfoInBackgroundParameterTypes56);
+				_importPortletInfoInBackgroundParameterTypes57);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, taskName, plid, groupId, portletId, parameterMap,
@@ -2226,7 +2267,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfoInBackground",
-				_importPortletInfoInBackgroundParameterTypes57);
+				_importPortletInfoInBackgroundParameterTypes58);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, taskName, portletId, parameterMap, file);
@@ -2262,7 +2303,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "importPortletInfoInBackground",
-				_importPortletInfoInBackgroundParameterTypes58);
+				_importPortletInfoInBackgroundParameterTypes59);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, taskName, portletId, parameterMap, is);
@@ -2301,7 +2342,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "schedulePublishToLive",
-				_schedulePublishToLiveParameterTypes59);
+				_schedulePublishToLiveParameterTypes60);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceGroupId, targetGroupId, privateLayout,
@@ -2341,7 +2382,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "schedulePublishToLive",
-				_schedulePublishToLiveParameterTypes60);
+				_schedulePublishToLiveParameterTypes61);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceGroupId, targetGroupId, privateLayout,
@@ -2382,7 +2423,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "schedulePublishToLive",
-				_schedulePublishToLiveParameterTypes61);
+				_schedulePublishToLiveParameterTypes62);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceGroupId, targetGroupId, privateLayout,
@@ -2425,7 +2466,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "schedulePublishToRemote",
-				_schedulePublishToRemoteParameterTypes62);
+				_schedulePublishToRemoteParameterTypes63);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceGroupId, privateLayout, layoutIdMap,
@@ -2465,7 +2506,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "setLayouts",
-				_setLayoutsParameterTypes63);
+				_setLayoutsParameterTypes64);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId, layoutIds,
@@ -2501,7 +2542,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "unschedulePublishToLive",
-				_unschedulePublishToLiveParameterTypes64);
+				_unschedulePublishToLiveParameterTypes65);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, jobName, groupName);
@@ -2536,7 +2577,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "unschedulePublishToRemote",
-				_unschedulePublishToRemoteParameterTypes65);
+				_unschedulePublishToRemoteParameterTypes66);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, jobName, groupName);
@@ -2570,7 +2611,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateIconImage",
-				_updateIconImageParameterTypes66);
+				_updateIconImageParameterTypes67);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, bytes);
@@ -2618,7 +2659,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLayout",
-				_updateLayoutParameterTypes67);
+				_updateLayoutParameterTypes68);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, parentLayoutId,
@@ -2660,7 +2701,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLayout",
-				_updateLayoutParameterTypes68);
+				_updateLayoutParameterTypes69);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, typeSettings);
@@ -2699,7 +2740,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLookAndFeel",
-				_updateLookAndFeelParameterTypes69);
+				_updateLookAndFeelParameterTypes70);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, themeId,
@@ -2739,7 +2780,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateName",
-				_updateNameParameterTypes70);
+				_updateNameParameterTypes71);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, name, languageId);
@@ -2778,7 +2819,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateName",
-				_updateNameParameterTypes71);
+				_updateNameParameterTypes72);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, name, languageId);
@@ -2817,7 +2858,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateParentLayoutId",
-				_updateParentLayoutIdParameterTypes72);
+				_updateParentLayoutIdParameterTypes73);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, parentLayoutId);
@@ -2855,7 +2896,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateParentLayoutId",
-				_updateParentLayoutIdParameterTypes73);
+				_updateParentLayoutIdParameterTypes74);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, parentPlid);
@@ -2895,7 +2936,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateParentLayoutIdAndPriority",
-				_updateParentLayoutIdAndPriorityParameterTypes74);
+				_updateParentLayoutIdAndPriorityParameterTypes75);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, parentPlid, priority);
@@ -2934,7 +2975,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updatePriority",
-				_updatePriorityParameterTypes75);
+				_updatePriorityParameterTypes76);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, priority);
@@ -2973,7 +3014,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updatePriority",
-				_updatePriorityParameterTypes76);
+				_updatePriorityParameterTypes77);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, nextLayoutId,
@@ -3012,7 +3053,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updatePriority",
-				_updatePriorityParameterTypes77);
+				_updatePriorityParameterTypes78);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, priority);
@@ -3054,7 +3095,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportLayoutsFile",
-				_validateImportLayoutsFileParameterTypes78);
+				_validateImportLayoutsFileParameterTypes79);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, file);
@@ -3097,7 +3138,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportLayoutsFile",
-				_validateImportLayoutsFileParameterTypes79);
+				_validateImportLayoutsFileParameterTypes80);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, inputStream);
@@ -3139,7 +3180,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportLayoutsFile",
-				_validateImportLayoutsFileParameterTypes80);
+				_validateImportLayoutsFileParameterTypes81);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parameterMap, file);
@@ -3182,7 +3223,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportLayoutsFile",
-				_validateImportLayoutsFileParameterTypes81);
+				_validateImportLayoutsFileParameterTypes82);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parameterMap, inputStream);
@@ -3225,7 +3266,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportPortletInfo",
-				_validateImportPortletInfoParameterTypes82);
+				_validateImportPortletInfoParameterTypes83);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, file);
@@ -3268,7 +3309,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportPortletInfo",
-				_validateImportPortletInfoParameterTypes83);
+				_validateImportPortletInfoParameterTypes84);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, exportImportConfiguration, inputStream);
@@ -3310,7 +3351,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportPortletInfo",
-				_validateImportPortletInfoParameterTypes84);
+				_validateImportPortletInfoParameterTypes85);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, groupId, portletId, parameterMap, file);
@@ -3352,7 +3393,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "validateImportPortletInfo",
-				_validateImportPortletInfoParameterTypes85);
+				_validateImportPortletInfoParameterTypes86);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, groupId, portletId, parameterMap, inputStream);
@@ -3517,129 +3558,132 @@ public class LayoutServiceHttp {
 		int.class
 	};
 	private static final Class<?>[] _getLayoutsParameterTypes33 = new Class[] {
-		long.class, String.class
+		long.class, boolean.class, String.class
 	};
 	private static final Class<?>[] _getLayoutsParameterTypes34 = new Class[] {
+		long.class, String.class
+	};
+	private static final Class<?>[] _getLayoutsParameterTypes35 = new Class[] {
 		long.class, String.class, int.class, int.class
 	};
-	private static final Class<?>[] _getLayoutsCountParameterTypes35 =
-		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes36 =
-		new Class[] {long.class, boolean.class, long.class};
+		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes37 =
-		new Class[] {long.class, boolean.class, long.class, int.class};
+		new Class[] {long.class, boolean.class, long.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes38 =
+		new Class[] {long.class, boolean.class, long.class, int.class};
+	private static final Class<?>[] _getLayoutsCountParameterTypes39 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getTempFileNamesParameterTypes39 =
+	private static final Class<?>[] _getTempFileNamesParameterTypes40 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _hasLayoutParameterTypes40 = new Class[] {
+	private static final Class<?>[] _hasLayoutParameterTypes41 = new Class[] {
 		String.class, long.class, boolean.class
 	};
-	private static final Class<?>[] _hasPortletIdParameterTypes41 =
+	private static final Class<?>[] _hasPortletIdParameterTypes42 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _importLayoutsParameterTypes42 =
-		new Class[] {
-			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
-				class,
-			java.io.File.class
-		};
 	private static final Class<?>[] _importLayoutsParameterTypes43 =
 		new Class[] {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class,
-			java.io.InputStream.class
+			java.io.File.class
 		};
 	private static final Class<?>[] _importLayoutsParameterTypes44 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, byte[].class
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
+				class,
+			java.io.InputStream.class
 		};
 	private static final Class<?>[] _importLayoutsParameterTypes45 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, java.io.File.class
+			long.class, boolean.class, java.util.Map.class, byte[].class
 		};
 	private static final Class<?>[] _importLayoutsParameterTypes46 =
+		new Class[] {
+			long.class, boolean.class, java.util.Map.class, java.io.File.class
+		};
+	private static final Class<?>[] _importLayoutsParameterTypes47 =
 		new Class[] {
 			long.class, boolean.class, java.util.Map.class,
 			java.io.InputStream.class
 		};
-	private static final Class<?>[] _importLayoutsInBackgroundParameterTypes47 =
-		new Class[] {
-			String.class, long.class, boolean.class, java.util.Map.class,
-			java.io.File.class
-		};
 	private static final Class<?>[] _importLayoutsInBackgroundParameterTypes48 =
 		new Class[] {
 			String.class, long.class, boolean.class, java.util.Map.class,
-			java.io.InputStream.class
-		};
-	private static final Class<?>[] _importPortletInfoParameterTypes49 =
-		new Class[] {
-			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
-				class,
 			java.io.File.class
+		};
+	private static final Class<?>[] _importLayoutsInBackgroundParameterTypes49 =
+		new Class[] {
+			String.class, long.class, boolean.class, java.util.Map.class,
+			java.io.InputStream.class
 		};
 	private static final Class<?>[] _importPortletInfoParameterTypes50 =
 		new Class[] {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class,
-			java.io.InputStream.class
+			java.io.File.class
 		};
 	private static final Class<?>[] _importPortletInfoParameterTypes51 =
 		new Class[] {
-			long.class, long.class, String.class, java.util.Map.class,
-			java.io.File.class
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
+				class,
+			java.io.InputStream.class
 		};
 	private static final Class<?>[] _importPortletInfoParameterTypes52 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
-			java.io.InputStream.class
+			java.io.File.class
 		};
 	private static final Class<?>[] _importPortletInfoParameterTypes53 =
-		new Class[] {String.class, java.util.Map.class, java.io.File.class};
+		new Class[] {
+			long.class, long.class, String.class, java.util.Map.class,
+			java.io.InputStream.class
+		};
 	private static final Class<?>[] _importPortletInfoParameterTypes54 =
+		new Class[] {String.class, java.util.Map.class, java.io.File.class};
+	private static final Class<?>[] _importPortletInfoParameterTypes55 =
 		new Class[] {
 			String.class, java.util.Map.class, java.io.InputStream.class
 		};
 	private static final Class<?>[]
-		_importPortletInfoInBackgroundParameterTypes55 = new Class[] {
+		_importPortletInfoInBackgroundParameterTypes56 = new Class[] {
 			String.class, long.class, long.class, String.class,
 			java.util.Map.class, java.io.File.class
 		};
 	private static final Class<?>[]
-		_importPortletInfoInBackgroundParameterTypes56 = new Class[] {
+		_importPortletInfoInBackgroundParameterTypes57 = new Class[] {
 			String.class, long.class, long.class, String.class,
 			java.util.Map.class, java.io.InputStream.class
 		};
 	private static final Class<?>[]
-		_importPortletInfoInBackgroundParameterTypes57 = new Class[] {
+		_importPortletInfoInBackgroundParameterTypes58 = new Class[] {
 			String.class, String.class, java.util.Map.class, java.io.File.class
 		};
 	private static final Class<?>[]
-		_importPortletInfoInBackgroundParameterTypes58 = new Class[] {
+		_importPortletInfoInBackgroundParameterTypes59 = new Class[] {
 			String.class, String.class, java.util.Map.class,
 			java.io.InputStream.class
 		};
-	private static final Class<?>[] _schedulePublishToLiveParameterTypes59 =
+	private static final Class<?>[] _schedulePublishToLiveParameterTypes60 =
 		new Class[] {
 			long.class, long.class, boolean.class, long[].class,
 			java.util.Map.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class, String.class,
 			java.util.Date.class, java.util.Date.class, String.class
 		};
-	private static final Class<?>[] _schedulePublishToLiveParameterTypes60 =
+	private static final Class<?>[] _schedulePublishToLiveParameterTypes61 =
 		new Class[] {
 			long.class, long.class, boolean.class, long[].class,
 			java.util.Map.class, String.class, String.class,
 			java.util.Date.class, java.util.Date.class, String.class
 		};
-	private static final Class<?>[] _schedulePublishToLiveParameterTypes61 =
+	private static final Class<?>[] _schedulePublishToLiveParameterTypes62 =
 		new Class[] {
 			long.class, long.class, boolean.class, java.util.Map.class,
 			java.util.Map.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class, String.class,
 			java.util.Date.class, java.util.Date.class, String.class
 		};
-	private static final Class<?>[] _schedulePublishToRemoteParameterTypes62 =
+	private static final Class<?>[] _schedulePublishToRemoteParameterTypes63 =
 		new Class[] {
 			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
 			String.class, int.class, String.class, boolean.class, long.class,
@@ -3647,17 +3691,17 @@ public class LayoutServiceHttp {
 			String.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class
 		};
-	private static final Class<?>[] _setLayoutsParameterTypes63 = new Class[] {
+	private static final Class<?>[] _setLayoutsParameterTypes64 = new Class[] {
 		long.class, boolean.class, long.class, long[].class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _unschedulePublishToLiveParameterTypes64 =
+	private static final Class<?>[] _unschedulePublishToLiveParameterTypes65 =
 		new Class[] {long.class, String.class, String.class};
-	private static final Class<?>[] _unschedulePublishToRemoteParameterTypes65 =
+	private static final Class<?>[] _unschedulePublishToRemoteParameterTypes66 =
 		new Class[] {long.class, String.class, String.class};
-	private static final Class<?>[] _updateIconImageParameterTypes66 =
+	private static final Class<?>[] _updateIconImageParameterTypes67 =
 		new Class[] {long.class, byte[].class};
-	private static final Class<?>[] _updateLayoutParameterTypes67 =
+	private static final Class<?>[] _updateLayoutParameterTypes68 =
 		new Class[] {
 			long.class, boolean.class, long.class, long.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
@@ -3665,74 +3709,74 @@ public class LayoutServiceHttp {
 			boolean.class, java.util.Map.class, boolean.class, byte[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutParameterTypes68 =
+	private static final Class<?>[] _updateLayoutParameterTypes69 =
 		new Class[] {long.class, boolean.class, long.class, String.class};
-	private static final Class<?>[] _updateLookAndFeelParameterTypes69 =
+	private static final Class<?>[] _updateLookAndFeelParameterTypes70 =
 		new Class[] {
 			long.class, boolean.class, long.class, String.class, String.class,
 			String.class
 		};
-	private static final Class<?>[] _updateNameParameterTypes70 = new Class[] {
+	private static final Class<?>[] _updateNameParameterTypes71 = new Class[] {
 		long.class, boolean.class, long.class, String.class, String.class
 	};
-	private static final Class<?>[] _updateNameParameterTypes71 = new Class[] {
+	private static final Class<?>[] _updateNameParameterTypes72 = new Class[] {
 		long.class, String.class, String.class
 	};
-	private static final Class<?>[] _updateParentLayoutIdParameterTypes72 =
-		new Class[] {long.class, boolean.class, long.class, long.class};
 	private static final Class<?>[] _updateParentLayoutIdParameterTypes73 =
+		new Class[] {long.class, boolean.class, long.class, long.class};
+	private static final Class<?>[] _updateParentLayoutIdParameterTypes74 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[]
-		_updateParentLayoutIdAndPriorityParameterTypes74 = new Class[] {
+		_updateParentLayoutIdAndPriorityParameterTypes75 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _updatePriorityParameterTypes75 =
-		new Class[] {long.class, boolean.class, long.class, int.class};
 	private static final Class<?>[] _updatePriorityParameterTypes76 =
+		new Class[] {long.class, boolean.class, long.class, int.class};
+	private static final Class<?>[] _updatePriorityParameterTypes77 =
 		new Class[] {
 			long.class, boolean.class, long.class, long.class, long.class
 		};
-	private static final Class<?>[] _updatePriorityParameterTypes77 =
+	private static final Class<?>[] _updatePriorityParameterTypes78 =
 		new Class[] {long.class, int.class};
-	private static final Class<?>[] _validateImportLayoutsFileParameterTypes78 =
-		new Class[] {
-			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
-				class,
-			java.io.File.class
-		};
 	private static final Class<?>[] _validateImportLayoutsFileParameterTypes79 =
 		new Class[] {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class,
-			java.io.InputStream.class
+			java.io.File.class
 		};
 	private static final Class<?>[] _validateImportLayoutsFileParameterTypes80 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, java.io.File.class
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
+				class,
+			java.io.InputStream.class
 		};
 	private static final Class<?>[] _validateImportLayoutsFileParameterTypes81 =
 		new Class[] {
+			long.class, boolean.class, java.util.Map.class, java.io.File.class
+		};
+	private static final Class<?>[] _validateImportLayoutsFileParameterTypes82 =
+		new Class[] {
 			long.class, boolean.class, java.util.Map.class,
 			java.io.InputStream.class
-		};
-	private static final Class<?>[] _validateImportPortletInfoParameterTypes82 =
-		new Class[] {
-			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
-				class,
-			java.io.File.class
 		};
 	private static final Class<?>[] _validateImportPortletInfoParameterTypes83 =
 		new Class[] {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
 				class,
-			java.io.InputStream.class
+			java.io.File.class
 		};
 	private static final Class<?>[] _validateImportPortletInfoParameterTypes84 =
+		new Class[] {
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration.
+				class,
+			java.io.InputStream.class
+		};
+	private static final Class<?>[] _validateImportPortletInfoParameterTypes85 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			java.io.File.class
 		};
-	private static final Class<?>[] _validateImportPortletInfoParameterTypes85 =
+	private static final Class<?>[] _validateImportPortletInfoParameterTypes86 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
 			java.io.InputStream.class

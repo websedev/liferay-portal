@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
@@ -31,6 +32,7 @@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@

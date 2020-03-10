@@ -71,34 +71,36 @@
 				<liferay-util:dynamic-include key="com.liferay.login.web#/login.jsp#alertPre" />
 
 				<c:choose>
-					<c:when test='<%= SessionMessages.contains(request, "passwordSent") %>'>
+					<c:when test='<%= SessionMessages.contains(request, "forgotPasswordSent") %>'>
 						<div class="alert alert-success">
-							<liferay-ui:message key="an-email-has-been-sent-to-the-provided-email-address" />
+							<liferay-ui:message key="your-request-completed-successfully" />
 						</div>
 					</c:when>
 					<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>
 
 						<%
 						String userEmailAddress = (String)SessionMessages.get(request, "userAdded");
-						String userPassword = (String)SessionMessages.get(request, "userAddedPassword");
 						%>
 
 						<div class="alert alert-success">
-							<c:choose>
-								<c:when test="<%= company.isStrangersVerify() || Validator.isNull(userPassword) %>">
-									<liferay-ui:message key="thank-you-for-creating-an-account" />
+							<liferay-ui:message key="thank-you-for-creating-an-account" />
 
-									<c:if test="<%= company.isStrangersVerify() %>">
-										<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message arguments="<%= HtmlUtil.escape(userPassword) %>" key="thank-you-for-creating-an-account.-your-password-is-x" translateArguments="<%= false %>" />
-								</c:otherwise>
-							</c:choose>
+							<c:if test="<%= company.isStrangersVerify() %>">
+								<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
+							</c:if>
 
 							<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
-								<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-password-was-sent-to-x" translateArguments="<%= false %>" />
+								<c:choose>
+									<c:when test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
+										<liferay-ui:message key="use-your-password-to-login" />
+									</c:when>
+									<c:when test="<%= company.isSendPassword() %>">
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-password-was-sent-to-x" translateArguments="<%= false %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />
+									</c:otherwise>
+								</c:choose>
 							</c:if>
 						</div>
 					</c:when>

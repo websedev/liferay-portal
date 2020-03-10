@@ -51,6 +51,12 @@ public class PropsValues {
 	public static String ADMIN_EMAIL_FROM_NAME = PropsUtil.get(
 		PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
+	public static final String ADMIN_EMAIL_PASSWORD_CHANGED_BODY =
+		PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_CHANGED_BODY);
+
+	public static final String ADMIN_EMAIL_PASSWORD_CHANGED_SUBJECT =
+		PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_CHANGED_SUBJECT);
+
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_BODY = PropsUtil.get(
 		PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
 
@@ -68,6 +74,9 @@ public class PropsValues {
 
 	public static final String ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY =
 		PropsUtil.get(PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY);
+
+	public static final String ADMIN_EMAIL_USER_ADDED_RESET_PASSWORD_BODY =
+		PropsUtil.get(PropsKeys.ADMIN_EMAIL_USER_ADDED_RESET_PASSWORD_BODY);
 
 	public static final String ADMIN_EMAIL_USER_ADDED_SUBJECT = PropsUtil.get(
 		PropsKeys.ADMIN_EMAIL_USER_ADDED_SUBJECT);
@@ -1107,6 +1116,13 @@ public class PropsValues {
 	public static String DL_WEBDAV_SUBSTITUTION_CHAR = PropsUtil.get(
 		PropsKeys.DL_WEBDAV_SUBSTITUTION_CHAR);
 
+	public static final int DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS));
+
+	public static final int DNS_SECURITY_THREAD_LIMIT = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.DNS_SECURITY_THREAD_LIMIT));
+
 	public static final String[] DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS =
 		PropsUtil.getArray(PropsKeys.DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS);
 
@@ -1851,6 +1867,11 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
+
+	public static final boolean MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES));
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement

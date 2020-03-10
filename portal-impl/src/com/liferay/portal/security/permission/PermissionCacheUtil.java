@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.kernel.security.permission.UserBag;
@@ -37,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -75,6 +77,8 @@ public class PermissionCacheUtil {
 			return;
 		}
 
+		_clearPermissionChecksMap();
+
 		_userRolePortalCache.removeAll();
 		_userGroupRoleIdsPortalCache.removeAll();
 		_permissionPortalCache.removeAll();
@@ -86,6 +90,8 @@ public class PermissionCacheUtil {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
+
+		_clearPermissionChecksMap();
 
 		for (long userId : userIds) {
 			_userBagPortalCache.remove(userId);
@@ -105,6 +111,8 @@ public class PermissionCacheUtil {
 			return;
 		}
 
+		_clearPermissionChecksMap();
+
 		_permissionPortalCache.removeAll();
 		_userPrimaryKeyRolePortalCache.removeAll();
 	}
@@ -121,6 +129,8 @@ public class PermissionCacheUtil {
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			_permissionPortalCache.removeAll();
 		}
+
+		_clearPermissionChecksMap();
 	}
 
 	public static void clearResourcePermissionCache(
@@ -132,6 +142,8 @@ public class PermissionCacheUtil {
 
 			return;
 		}
+
+		_clearPermissionChecksMap();
 
 		if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
 			_permissionPortalCacheNamePrimKeyIndexer.removeKeys(
@@ -311,6 +323,20 @@ public class PermissionCacheUtil {
 			userId, primaryKey, roleName);
 
 		_userPrimaryKeyRolePortalCache.remove(userPrimaryKeyRoleKey);
+	}
+
+	private static void _clearPermissionChecksMap() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			Map<Object, Object> permissionChecksMap =
+				permissionChecker.getPermissionChecksMap();
+
+			if (permissionChecksMap != null) {
+				permissionChecksMap.clear();
+			}
+		}
 	}
 
 	private static void _sendClearCacheClusterMessage(

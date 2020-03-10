@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
@@ -126,12 +127,14 @@ public class FolderSearchFacetDisplayBuilder {
 
 		long folderId = GetterUtil.getLong(termCollector.getTerm());
 
-		if (folderId == 0) {
+		String displayName = getDisplayName(folderId);
+
+		if ((folderId == 0) || (displayName == null)) {
 			return null;
 		}
 
 		return buildFolderSearchFacetTermDisplayContext(
-			folderId, getDisplayName(folderId), termCollector.getFrequency(),
+			folderId, displayName, termCollector.getFrequency(),
 			isSelected(folderId));
 	}
 
@@ -177,11 +180,11 @@ public class FolderSearchFacetDisplayBuilder {
 	protected String getDisplayName(long folderId) {
 		String title = _folderTitleLookup.getFolderTitle(folderId);
 
-		if (title != null) {
+		if (Validator.isNotNull(title)) {
 			return title;
 		}
 
-		return StringPool.OPEN_BRACKET + folderId + StringPool.CLOSE_BRACKET;
+		return null;
 	}
 
 	protected FolderSearchFacetTermDisplayContext

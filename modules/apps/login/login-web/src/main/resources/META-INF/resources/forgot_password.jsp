@@ -107,7 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					</aui:input>
 
 					<c:if test="<%= captchaConfiguration.sendPasswordCaptchaEnabled() %>">
-						<portlet:resourceURL id="/login/captcha" var="captchaURL" />
+						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
 
 						<liferay-captcha:captcha
 							url="<%= captchaURL %>"
@@ -120,7 +120,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 				</c:when>
 				<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
 					<aui:input name="step" type="hidden" value="2" />
-					<aui:input name="emailAddress" type="hidden" value="<%= user2.getEmailAddress() %>" />
 
 					<portlet:renderURL var="redirectURL">
 						<portlet:param name="mvcRenderCommandName" value="/login/login" />
@@ -159,7 +158,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						</c:when>
 						<c:otherwise>
 							<c:if test="<%= reminderAttempts >= 3 %>">
-								<portlet:resourceURL id="/login/captcha" var="captchaURL" />
+								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
 
 								<liferay-captcha:captcha
 									url="<%= captchaURL %>"

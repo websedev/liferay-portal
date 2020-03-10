@@ -140,7 +140,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						>
 							<liferay-ui:search-container-column-text
 								name="name"
-								value="<%= fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink) %>"
+								value="<%= HtmlUtil.escape(fragmentEntryLinkDisplayContext.getFragmentEntryLinkName(fragmentEntryLink)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

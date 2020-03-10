@@ -23,6 +23,9 @@ public class UsersAdminWebKeys {
 
 	public static final String EDITABLE = "EDITABLE";
 
+	public static final String FILTER_MANAGEABLE_ORGANIZATIONS =
+		"FILTER_MANAGEABLE_ORGANIZATIONS";
+
 	public static final String FORM_LABEL = "FORM_LABEL";
 
 	public static final String JSP_PATH = "JSP_PATH";

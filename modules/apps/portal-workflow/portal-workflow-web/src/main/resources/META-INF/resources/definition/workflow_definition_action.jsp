@@ -75,11 +75,13 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 				url="<%= deactivateWorkflowDefinitionURL %>"
 			/>
 
-			<liferay-ui:icon
-				id='<%= "duplicate" + HtmlUtil.getAUICompatibleId(workflowDefinition.getName()) %>'
-				message="duplicate"
-				url="javascript:;"
-			/>
+			<c:if test="<%= workflowDefinitionDisplayContext.canPublishWorkflowDefinition() %>">
+				<liferay-ui:icon
+					id='<%= "duplicate" + HtmlUtil.getAUICompatibleId(workflowDefinition.getName()) %>'
+					message="duplicate"
+					url="javascript:;"
+				/>
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<liferay-portlet:actionURL name="deleteWorkflowDefinition" var="deleteWorkflowDefinitionURL">

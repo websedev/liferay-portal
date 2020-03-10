@@ -28,18 +28,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -72,7 +79,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 			_renderRequest, _renderResponse);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		return new DropdownItemList() {
 			{
 				if (isShowRestoreButton()) {
@@ -195,7 +202,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 		return searchActionURL.toString();
 	}
 
-	public SearchContainer getSearchContainer() {
+	public SearchContainer getSearchContainer() throws PortalException {
 		if (_userSearch != null) {
 			return _userSearch;
 		}
@@ -227,17 +234,47 @@ public class ViewUsersManagementToolbarDisplayContext {
 			searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
 		}
 
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
+
+		boolean filterManageableOrganizations = GetterUtil.getBoolean(
+			_renderRequest.getAttribute(
+				UsersAdminWebKeys.FILTER_MANAGEABLE_ORGANIZATIONS));
+
+		String usersListView = GetterUtil.getString(
+			_renderRequest.getAttribute("view.jsp-usersListView"));
+
+		if (usersListView.equals(UserConstants.LIST_VIEW_TREE) &&
+			Validator.isNull(searchTerms.getKeywords())) {
+
+			userParams.put("noOrganizations", Boolean.TRUE);
+			userParams.put("usersOrgsCount", 0);
+		}
+		else if (filterManageableOrganizations &&
+				 !UserPermissionUtil.contains(
+					 themeDisplay.getPermissionChecker(),
+					 ResourceConstants.PRIMKEY_DNE, ActionKeys.VIEW)) {
+
+			User user = themeDisplay.getUser();
+
+			long[] organizationIds = user.getOrganizationIds();
+
+			if (ArrayUtil.isEmpty(organizationIds)) {
+				organizationIds = new long[] {0};
+			}
+
+			userParams.put("usersOrgs", ArrayUtil.toLongArray(organizationIds));
+		}
+
 		int total = UserLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), new LinkedHashMap<String, Object>());
+			searchTerms.getStatus(), userParams);
 
 		userSearch.setTotal(total);
 
 		List<User> results = UserLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), new LinkedHashMap<String, Object>(),
-			userSearch.getStart(), userSearch.getEnd(),
-			userSearch.getOrderByComparator());
+			searchTerms.getStatus(), userParams, userSearch.getStart(),
+			userSearch.getEnd(), userSearch.getOrderByComparator());
 
 		userSearch.setResults(results);
 
@@ -266,7 +303,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 		};
 	}
 
-	public boolean isShowDeleteButton() {
+	public boolean isShowDeleteButton() throws PortalException {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)getSearchContainer().getSearchTerms();
 
@@ -280,7 +317,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 		return false;
 	}
 
-	public boolean isShowRestoreButton() {
+	public boolean isShowRestoreButton() throws PortalException {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)getSearchContainer().getSearchTerms();
 

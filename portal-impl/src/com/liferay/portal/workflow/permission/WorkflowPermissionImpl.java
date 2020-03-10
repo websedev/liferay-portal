@@ -104,7 +104,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 
 		count = WorkflowTaskManagerUtil.getWorkflowTaskCountByUserRoles(
 			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
-			Boolean.FALSE);
+			workflowInstance.getWorkflowInstanceId(), Boolean.FALSE);
 
 		if (count > 0) {
 			return true;

@@ -64,7 +64,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 		>
 
 			<%
-			List<Group> childGroups = group.getChildren(true);
+			List<Group> childGroups = GroupServiceUtil.getGroups(group.getCompanyId(), group.getGroupId(), true);
 
 			Map<String, Object> data = new HashMap<String, Object>();
 

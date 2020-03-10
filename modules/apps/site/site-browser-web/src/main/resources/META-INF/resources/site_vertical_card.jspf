@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<Group> childGroups = group.getChildren(true);
+List<Group> childGroups = GroupServiceUtil.getGroups(group.getCompanyId(), group.getGroupId(), true);
 %>
 
 <div role="<%= (urlData != null) ? "button" : "" %>">

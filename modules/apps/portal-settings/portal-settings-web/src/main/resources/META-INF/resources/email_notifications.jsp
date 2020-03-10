@@ -61,6 +61,18 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 				/>
 			</aui:field-wrapper>
 
+			<liferay-ui:error key="adminEmailUserAddedResetPasswordBody" message="please-enter-a-valid-body" />
+
+			<liferay-frontend:email-notification-settings
+				bodyLabel='<%= LanguageUtil.get(resourceBundle, "body-with-password-link") %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedResetPasswordBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_RESET_PASSWORD_BODY)) %>'
+				emailParam="adminEmailUserAddedResetPassword"
+				fieldPrefix="settings"
+				helpMessage='<%= LanguageUtil.get(resourceBundle, "account-created-notification-body-with-password-reset-help") %>'
+				showEmailEnabled="<%= false %>"
+				showSubject="<%= false %>"
+			/>
+
 			<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
 
 			<liferay-frontend:email-notification-settings
@@ -113,9 +125,19 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />
 
 		<liferay-frontend:email-notification-settings
+			bodyLabel="email-with-password"
 			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
 			emailParam="adminEmailPasswordSent"
 			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentSubject", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
+			fieldPrefix="settings"
+			showEmailEnabled="<%= false %>"
+		/>
+
+		<liferay-frontend:email-notification-settings
+			bodyLabel="email-without-password"
+			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordChangedBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_CHANGED_BODY)) %>'
+			emailParam="adminEmailPasswordChanged"
+			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordChangedSubject", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_CHANGED_SUBJECT)) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>

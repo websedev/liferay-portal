@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.access.token;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -54,7 +55,8 @@ public class LiferayAccessTokenService extends AccessTokenService {
 		String remoteHost = httpServletRequest.getRemoteHost();
 
 		try {
-			InetAddress inetAddress = InetAddress.getByName(remoteAddr);
+			InetAddress inetAddress = InetAddressUtil.getInetAddressByName(
+				remoteAddr);
 
 			remoteHost = inetAddress.getCanonicalHostName();
 		}

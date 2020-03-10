@@ -38,6 +38,12 @@ public interface PropsKeys {
 
 	public static final String ADMIN_EMAIL_FROM_NAME = "admin.email.from.name";
 
+	public static final String ADMIN_EMAIL_PASSWORD_CHANGED_BODY =
+		"admin.email.password.changed.body";
+
+	public static final String ADMIN_EMAIL_PASSWORD_CHANGED_SUBJECT =
+		"admin.email.password.changed.subject";
+
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_BODY =
 		"admin.email.password.reset.body";
 
@@ -58,6 +64,9 @@ public interface PropsKeys {
 
 	public static final String ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY =
 		"admin.email.user.added.no.password.body";
+
+	public static final String ADMIN_EMAIL_USER_ADDED_RESET_PASSWORD_BODY =
+		"admin.email.user.added.reset.password.body";
 
 	public static final String ADMIN_EMAIL_USER_ADDED_SUBJECT =
 		"admin.email.user.added.subject";
@@ -1175,6 +1184,12 @@ public interface PropsKeys {
 	public static final String DL_WEBDAV_SUBSTITUTION_CHAR =
 		"dl.webdav.substitution.char";
 
+	public static final String DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS =
+		"dns.security.address.timeout.seconds";
+
+	public static final String DNS_SECURITY_THREAD_LIMIT =
+		"dns.security.thread.limit";
+
 	public static final String DYNAMIC_RESOURCE_SERVLET_ALLOWED_PATHS =
 		"dynamic.resource.servlet.allowed.paths";
 
@@ -1655,6 +1670,10 @@ public interface PropsKeys {
 
 	public static final String JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS =
 		"jsonws.web.service.invalid.http.methods";
+
+	public static final String
+		JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES =
+			"jsonws.web.service.parameter.type.whitelist.class.names";
 
 	public static final String JSONWS_WEB_SERVICE_PATHS_EXCLUDES =
 		"jsonws.web.service.paths.excludes";
@@ -2183,6 +2202,9 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL =
 		"module.framework.dynamic.install.start.level";
+
+	public static final String MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
+		"module.framework.export.password.attributes";
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement

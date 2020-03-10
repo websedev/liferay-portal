@@ -15,9 +15,12 @@
 package com.liferay.hello.world.web.internal.portlet;
 
 import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,12 +68,31 @@ public class HelloWorldPortlet extends MVCPortlet {
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
+		String releaseInfo = StringPool.BLANK;
+
+		if (_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
+		}
+		else if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
+			releaseInfo = ReleaseInfo.getName();
+		}
+		else {
+			releaseInfo = ReleaseInfo.getReleaseInfo();
+		}
+
 		printWriter.print(
 			"Welcome to ".concat(
-				ReleaseInfo.getReleaseInfo()
+				releaseInfo
 			).concat(
 				"."
 			));
 	}
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
+		StringUtil.equalsIgnoreCase(
+			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "off");
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
+		StringUtil.equalsIgnoreCase(
+			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "partial");
 
 }

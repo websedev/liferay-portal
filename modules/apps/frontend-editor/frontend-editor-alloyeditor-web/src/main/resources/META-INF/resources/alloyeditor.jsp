@@ -197,6 +197,7 @@ name = HtmlUtil.escapeJS(name);
 
 		editorConfig = A.merge(
 			{
+				htmlEncodeOutput: true,
 				title: false,
 				uiNode: uiNode
 			},

@@ -7,3 +7,4 @@ Import-Package:\
 	!junit.*,\
 	\
 	*
+-noee: true

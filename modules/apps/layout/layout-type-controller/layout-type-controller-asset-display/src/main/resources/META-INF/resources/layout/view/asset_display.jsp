@@ -16,7 +16,24 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AssetRendererFactory assetRendererFactory = null;
+
+if (assetEntry != null) {
+	assetRendererFactory = assetEntry.getAssetRendererFactory();
+}
+%>
+
 <c:choose>
+	<c:when test="<%= (assetRendererFactory != null) && !assetRendererFactory.hasPermission(permissionChecker, assetEntry.getClassPK(), ActionKeys.VIEW) %>">
+		<div class="layout-content" id="main-content" role="main">
+			<div class="container-fluid-1280 pt-3">
+				<div class="alert alert-danger">
+					<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
+				</div>
+			</div>
+		</div>
+	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(fragmentEntryLinks) %>">
 
 		<%

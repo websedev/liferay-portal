@@ -14,6 +14,9 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
@@ -23,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,7 +57,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
@@ -79,6 +83,21 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT,
 			workflowNavigationDisplayContext);
+	}
+
+	@Override
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
+
+		super.checkPermissions(portletRequest);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin()) {
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
+		}
 	}
 
 	@Reference(

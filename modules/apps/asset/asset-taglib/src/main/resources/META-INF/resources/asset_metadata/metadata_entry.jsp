@@ -85,7 +85,15 @@ else if (metadataField.equals("view-count")) {
 	<c:when test='<%= Objects.equals(value, "author") %>'>
 
 		<%
-		User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+		String fullName = LanguageUtil.get(request, "anonymous");
+
+		long userId = assetRenderer.getUserId();
+
+		if (userId > 0) {
+			User assetRendererUser = UserLocalServiceUtil.getUser(userId);
+
+			fullName = assetRendererUser.getFullName();
+		}
 
 		String displayDate = StringPool.BLANK;
 
@@ -100,12 +108,12 @@ else if (metadataField.equals("view-count")) {
 		<div class="metadata-author">
 			<div class="asset-avatar">
 				<liferay-ui:user-portrait
-					user="<%= assetRendererUser %>"
+					userId="<%= userId %>"
 				/>
 			</div>
 
 			<div class="asset-user-info">
-				<span class="user-info"><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></span>
+				<span class="user-info"><%= HtmlUtil.escape(fullName) %></span>
 
 				<span class="date-info"><%= displayDate %></span>
 			</div>

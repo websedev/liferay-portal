@@ -25,7 +25,7 @@ boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 
 <div class="clearfix journal-content-article" data-analytics-asset-id="<%= articleDisplay.getArticleId() %>" data-analytics-asset-title="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" data-analytics-asset-type="web-content">
 	<c:if test="<%= showTitle %>">
-		<%= articleDisplay.getTitle() %>
+		<%= HtmlUtil.escape(articleDisplay.getTitle()) %>
 	</c:if>
 
 	<%= articleDisplay.getContent() %>

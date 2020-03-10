@@ -9,7 +9,7 @@ configurations {
 
 dependencies {
 	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.7.1"
-	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.8.10"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.9"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.8.10"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.8.10"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.8.10"
@@ -74,7 +74,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.portal.search.engine.adapter.api", version: "2.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.search.spi", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "3.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	compileOnly group: "org.codehaus.woodstox", name: "woodstox-core-asl", version: "4.4.1"
