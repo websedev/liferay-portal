@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 
 import java.io.Reader;
@@ -23,10 +24,14 @@ import java.io.Reader;
  */
 public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 
-	public JSONDeserializerImpl() {
+	public JSONDeserializerImpl(
+		LiferayJSONDeserializationWhitelist
+			liferayJSONDeserializationWhitelist) {
+
 		_jsonDeserializer = new flexjson.JSONDeserializer<T>();
 
-		_portalBeanObjectFactory = new PortalBeanObjectFactory();
+		_portalBeanObjectFactory = new PortalBeanObjectFactory(
+			liferayJSONDeserializationWhitelist);
 
 		_jsonDeserializer.use(Object.class, _portalBeanObjectFactory);
 	}

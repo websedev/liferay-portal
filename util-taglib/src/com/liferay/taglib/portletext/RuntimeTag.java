@@ -16,6 +16,7 @@ package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.portlet.PortletParameterUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,6 +43,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,6 +107,26 @@ public class RuntimeTag extends TagSupport {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
+
+			if (embeddedPortletIds == null) {
+				embeddedPortletIds = new Stack<String>();
+
+				_embeddedPortletIds.set(embeddedPortletIds);
+			}
+
+			if (embeddedPortletIds.search(portletId) > -1) {
+				String errorMessage = LanguageUtil.get(
+					pageContext, "the-application-cannot-include-itself");
+
+				request.setAttribute(
+					"liferay-portlet:runtime:errorMessage", errorMessage);
+
+				PortalIncludeUtil.include(pageContext, _ERROR_PAGE);
+
+				return;
+			}
+
 			if (themeDisplay.isStateMaximized()) {
 				LayoutTypePortlet layoutTypePortlet =
 					themeDisplay.getLayoutTypePortlet();
@@ -150,7 +174,11 @@ public class RuntimeTag extends TagSupport {
 				PortletJSONUtil.writeHeaderPaths(response, jsonObject);
 			}
 
+			embeddedPortletIds.push(portletId);
+
 			PortletContainerUtil.render(request, response, portlet);
+
+			embeddedPortletIds.pop();
 
 			if (jsonObject != null) {
 				PortletJSONUtil.writeFooterPaths(response, jsonObject);
@@ -223,7 +251,14 @@ public class RuntimeTag extends TagSupport {
 		return portlet;
 	}
 
+	private static final String _ERROR_PAGE =
+		"/html/taglib/portlet/runtime/error.jsp";
+
 	private static Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
+
+	private static final ThreadLocal<Stack<String>> _embeddedPortletIds =
+		new AutoResetThreadLocal<Stack<String>>(
+			RuntimeTag.class + "._embeddedPortletIds");
 
 	private String _defaultPreferences;
 	private String _portletName;

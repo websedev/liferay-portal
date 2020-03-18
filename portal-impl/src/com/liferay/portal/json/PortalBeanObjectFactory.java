@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,12 +40,29 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PortalBeanObjectFactory extends BeanObjectFactory {
 
+	public PortalBeanObjectFactory(
+		LiferayJSONDeserializationWhitelist
+			liferayJSONDeserializationWhitelist) {
+
+		_liferayJSONDeserializationWhitelist =
+			liferayJSONDeserializationWhitelist;
+	}
+
 	@Override
 	public Object instantiate(
 		ObjectBinder objectBinder, Object value, Type targetType,
 		@SuppressWarnings("rawtypes") Class targetClass) {
 
-		if (_safeMode) {
+		boolean safeMode = _safeMode;
+
+		if (!safeMode &&
+			!_liferayJSONDeserializationWhitelist.isWhitelisted(
+				targetClass.getName())) {
+
+			safeMode = true;
+		}
+
+		if (safeMode) {
 			Map<Object, Object> target = new HashMap<Object, Object>();
 
 			target.put("class", targetClass.getName());
@@ -172,5 +190,8 @@ public class PortalBeanObjectFactory extends BeanObjectFactory {
 	private Map<Class<?>, Map<String, Field>> _declaredFields =
 		new ConcurrentHashMap<Class<?>, Map<String, Field>>();
 	private boolean _safeMode;
+
+	private final LiferayJSONDeserializationWhitelist
+		_liferayJSONDeserializationWhitelist;
 
 }

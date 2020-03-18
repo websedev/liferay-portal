@@ -60,7 +60,9 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 		<aui:input name="file" type="file" />
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<c:if test="<%= WorkflowDefinitionPermissionChecker.canPublishWorkflowDefinition(permissionChecker) %>">
+				<aui:button type="submit" />
+			</c:if>
 
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>

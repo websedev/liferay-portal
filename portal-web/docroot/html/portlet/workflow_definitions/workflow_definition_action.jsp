@@ -23,21 +23,23 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 %>
 
 <liferay-ui:icon-menu>
-	<portlet:renderURL var="editURL">
-		<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= WorkflowDefinitionPermissionChecker.canPublishWorkflowDefinition(permissionChecker) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		image="post"
-		message='<%= LanguageUtil.format(pageContext, "add-new-x", "file") %>'
-		url="<%= editURL %>"
-	/>
+		<liferay-ui:icon
+			image="post"
+			message='<%= LanguageUtil.format(pageContext, "add-new-x", "file") %>'
+			url="<%= editURL %>"
+		/>
+	</c:if>
 
-	<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+	<c:if test='<%= WorkflowDefinitionPermissionChecker.canPublishWorkflowDefinition(permissionChecker) && DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
 
 		<%
 		String taglibOnClick = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('" + HtmlUtil.escapeJS(workflowDefinition.getName()) + "', '" + workflowDefinition.getVersion() + "', '', Liferay.Util.getWindowName());";
@@ -49,7 +51,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= !workflowDefinition.isActive() %>">
+	<c:if test="<%= WorkflowDefinitionPermissionChecker.canPublishWorkflowDefinition(permissionChecker) && !workflowDefinition.isActive() %>">
 		<portlet:actionURL var="restoreWorkflowDefinitionURL">
 			<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

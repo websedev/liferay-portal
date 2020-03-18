@@ -41,16 +41,14 @@ public class IFrameUtil {
 			PortletRequest portletRequest, String password)
 		throws PortalException, SystemException {
 
-		if (!isPasswordTokenEnabled(portletRequest)) {
-			return StringPool.BLANK;
+		if (Validator.isNotNull(password) && password.equals("@password@")) {
+			if (isPasswordTokenResolutionEnabled(portletRequest)) {
+				password = PortalUtil.getUserPassword(portletRequest);
+			}
 		}
 
-		if (Validator.isNull(password) || password.equals("@password@")) {
-			password = PortalUtil.getUserPassword(portletRequest);
-
-			if (password == null) {
-				password = StringPool.BLANK;
-			}
+		if (password == null) {
+			password = StringPool.BLANK;
 		}
 
 		return password;
@@ -82,6 +80,10 @@ public class IFrameUtil {
 	public static boolean isPasswordTokenEnabled(PortletRequest portletRequest)
 		throws PortalException, SystemException {
 
+		if (!PropsValues.SESSION_STORE_PASSWORD) {
+			return false;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -89,12 +91,14 @@ public class IFrameUtil {
 
 		String roleName = PropsValues.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE;
 
-		if (Validator.isNull(roleName)) {
+		if (layout.isPrivateLayout() && layout.getGroup().isUser() &&
+			(themeDisplay.getRealUserId() == layout.getGroup().getClassPK())) {
+
 			return true;
 		}
 
-		if (layout.isPrivateLayout() && layout.getGroup().isUser()) {
-			return true;
+		if (Validator.isNull(roleName)) {
+			return false;
 		}
 
 		try {
@@ -116,6 +120,28 @@ public class IFrameUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isPasswordTokenResolutionEnabled(
+			PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		if (!PropsValues.SESSION_STORE_PASSWORD) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isPrivateLayout() && layout.getGroup().isUser() &&
+			(themeDisplay.getRealUserId() != layout.getGroup().getClassPK())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(IFrameUtil.class);

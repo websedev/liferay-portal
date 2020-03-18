@@ -14,14 +14,8 @@
 
 package com.liferay.portal.metadata;
 
-import org.apache.tika.metadata.Property;
-
 /**
  * @author Alexander Chow
  */
 public interface XMPDM extends org.apache.tika.metadata.XMPDM {
-
-	public static final Property DURATION = Property.externalText(
-		"xmpDM:duration");
-
 }

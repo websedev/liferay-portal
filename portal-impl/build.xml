@@ -171,6 +171,42 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<delete dir="${tstamp.value}" />
 	</target>
 
+	<target name="build-commons-fileupload-jar">
+		<get dest="commons-fileupload-1.2.2-src.zip" src="http://archive.apache.org/dist/commons/fileupload/source/commons-fileupload-1.2.2-src.zip" />
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="commons-fileupload-1.2.2-src.zip"
+		/>
+
+		<delete file="commons-fileupload-1.2.2-src.zip" />
+
+		<patch patchfile="${project.dir}/lib/portal/commons-fileupload/LPS-44121-CVE-2014-0050.patch"
+			dir="${tstamp.value}/commons-fileupload-1.2.2-src"
+			strip="2"
+		/>
+
+		<patch patchfile="${project.dir}/lib/portal/commons-fileupload/LPS-67541-CVE-2016-3092.patch"
+			dir="${tstamp.value}/commons-fileupload-1.2.2-src"
+			strip="2"
+		/>
+
+		<artifact:mvn pom="${tstamp.value}/commons-fileupload-1.2.2-src/pom.xml">
+			<arg value="package" />
+		</artifact:mvn>
+
+		<move
+			file="${tstamp.value}/commons-fileupload-1.2.2-src/target/commons-fileupload-1.2.2.jar"
+			tofile="${project.dir}/lib/portal/commons-fileupload.jar.new"
+		/>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="build-creole-parser">
 		<delete>
 			<fileset
@@ -332,6 +368,63 @@ public class Creole10Parser]]></replacevalue>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="src/com/liferay/portal/tools/instance_wrappers.xml" />
 		</java>
+	</target>
+
+	<target name="build-jabsorb-jar">
+		<mirrors-get
+			dest="jabsorb-1.3.2-sources.zip"
+			src="https://repo1.maven.org/maven2/org/jabsorb/jabsorb/1.3.2/jabsorb-1.3.2-sources.jar"
+		/>
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="jabsorb-1.3.2-sources.zip"
+		>
+			<patternset>
+				<include name="**/JSONSerializer.java" />
+			</patternset>
+		</unzip>
+
+		<delete file="jabsorb-1.3.2-sources.zip" />
+
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/jabsorb/JABSORB-LPS-54220.patch"
+			strip="1"
+		/>
+
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/jabsorb/LPS-84521.patch"
+			strip="1"
+		/>
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="${tstamp.value}" />
+			<param name="javac.srcdir" value="${tstamp.value}" />
+		</antcall>
+
+		<mirrors-get
+			dest="jabsorb-1.3.2.jar"
+			src="https://repo1.maven.org/maven2/org/jabsorb/jabsorb/1.3.2/jabsorb-1.3.2.jar"
+		/>
+
+		<zip destfile="${project.dir}/lib/portal/jabsorb.jar.new">
+			<zipfileset src="jabsorb-1.3.2.jar" excludes="org/json/**" />
+		</zip>
+
+		<delete file="jabsorb-1.3.2.jar" />
+
+		<jar destfile="${project.dir}/lib/portal/jabsorb.jar.new" update="true">
+			<zipfileset dir="${tstamp.value}" includes="**/*.class" />
+		</jar>
+
+		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="build-json-java-jar">

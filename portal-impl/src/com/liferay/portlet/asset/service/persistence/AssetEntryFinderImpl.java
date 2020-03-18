@@ -266,9 +266,20 @@ public class AssetEntryFinderImpl
 			sb.append("OR (AssetEntry.entryId = AssetLink.entryId2)");
 		}
 
-		if (entryQuery.getOrderByCol1().equals("ratings") ||
-			entryQuery.getOrderByCol2().equals("ratings")) {
+		String orderByCol1 = AssetEntryQuery.ORDER_BY_COLUMNS[2];
+		String orderByCol2 = AssetEntryQuery.ORDER_BY_COLUMNS[2];
 
+		for (String orderByColumn : AssetEntryQuery.ORDER_BY_COLUMNS) {
+			if (orderByColumn.equals(entryQuery.getOrderByCol1())) {
+				orderByCol1 = orderByColumn;
+			}
+
+			if (orderByColumn.equals(entryQuery.getOrderByCol2())) {
+				orderByCol2 = orderByColumn;
+			}
+		}
+
+		if (orderByCol1.equals("ratings") || orderByCol2.equals("ratings")) {
 			sb.append(" LEFT JOIN ");
 			sb.append("RatingsStats ON ");
 			sb.append("(RatingsStats.classNameId = ");
@@ -376,27 +387,26 @@ public class AssetEntryFinderImpl
 
 			sb.append(" ORDER BY ");
 
-			if (entryQuery.getOrderByCol1().equals("ratings")) {
+			if (orderByCol1.equals("ratings")) {
 				sb.append("TEMP_TABLE.averageScore");
 			}
 			else {
 				sb.append("AssetEntry.");
-				sb.append(entryQuery.getOrderByCol1());
+				sb.append(orderByCol1);
 			}
 
 			sb.append(StringPool.SPACE);
 			sb.append(entryQuery.getOrderByType1());
 
-			if (Validator.isNotNull(entryQuery.getOrderByCol2()) &&
-				!entryQuery.getOrderByCol1().equals(
-					entryQuery.getOrderByCol2())) {
+			if (Validator.isNotNull(orderByCol2) &&
+				!orderByCol1.equals(orderByCol2)) {
 
-				if (entryQuery.getOrderByCol2().equals("ratings")) {
+				if (orderByCol2.equals("ratings")) {
 					sb.append(", TEMP_TABLE.averageScore");
 				}
 				else {
 					sb.append(", AssetEntry.");
-					sb.append(entryQuery.getOrderByCol2());
+					sb.append(orderByCol2);
 				}
 
 				sb.append(StringPool.SPACE);

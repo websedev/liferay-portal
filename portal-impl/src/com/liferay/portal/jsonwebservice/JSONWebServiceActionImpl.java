@@ -19,12 +19,16 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PropsUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -40,6 +44,7 @@ import java.util.Map;
 import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
+import jodd.typeconverter.TypeConversionException;
 import jodd.typeconverter.TypeConverterManager;
 
 import jodd.util.NameValue;
@@ -85,6 +90,54 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		}
 
 		return new JSONRPCResponse(jsonRPCRequest, result, exception);
+	}
+
+	private void _checkTypeIsAssignable(
+		int argumentPos, Class<?> targetClass, Class<?> parameterType) {
+
+		String parameterTypeName = parameterType.getName();
+
+		if (parameterTypeName.contains("com.liferay") &&
+			parameterTypeName.contains("Util")) {
+
+			throw new IllegalArgumentException(
+				"Not instantiating " + parameterTypeName);
+		}
+
+		if (targetClass.equals(parameterType)) {
+			return;
+		}
+
+		String implClassName = StringUtil.replace(
+			targetClass.getName(), ".kernel.", ".");
+
+		implClassName =
+			StringUtil.replace(implClassName, ".model.", ".model.impl.") +
+				"Impl";
+
+		if (parameterTypeName.equals(implClassName)) {
+			return;
+		}
+
+		if (!ReflectUtil.isTypeOf(parameterType, targetClass)) {
+			throw new IllegalArgumentException(
+				"Unmatched argument type " + parameterTypeName +
+					" for method argument " + argumentPos);
+		}
+
+		if (parameterType.isPrimitive()) {
+			return;
+		}
+
+		if (ArrayUtil.contains(
+				_JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES,
+				parameterTypeName)) {
+
+			return;
+		}
+
+		throw new TypeConversionException(
+			parameterTypeName + " is not allowed to be instantiated");
 	}
 
 	private Object _convertListToArray(List<?> list, Class<?> componentType) {
@@ -246,13 +299,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return serviceContext;
 		}
 
-		String className = parameterType.getName();
-
-		if (className.contains("com.liferay") && className.contains("Util")) {
-			throw new IllegalArgumentException(
-				"Not instantiating " + className);
-		}
-
 		return parameterType.newInstance();
 	}
 
@@ -365,7 +411,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			Object parameterValue = null;
 
 			if (value != null) {
-				Class<?> parameterType = methodParameters[i].getType();
+				Class<?> targetClass = methodParameters[i].getType();
+
+				Class<?> parameterType = targetClass;
 
 				String parameterTypeName =
 					_jsonWebServiceActionParameters.getParameterTypeName(
@@ -376,14 +424,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					parameterType = classLoader.loadClass(parameterTypeName);
 
-					if (!ReflectUtil.isSubclass(
-							parameterType, methodParameters[i].getType())) {
-
-						throw new IllegalArgumentException(
-							"Unmatched argument type " +
-								parameterType.getName() +
-									" for method argument " + i);
-					}
+					_checkTypeIsAssignable(i, targetClass, parameterType);
 				}
 
 				if (value.equals(Void.TYPE)) {
@@ -422,9 +463,14 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return parameters;
 	}
 
+	private static final String[]
+		_JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES =
+			PropsUtil.getArray(
+				PropsKeys.
+					JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES);
+
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceActionImpl.class);
-
 	private JSONWebServiceActionConfig _jsonWebServiceActionConfig;
 	private JSONWebServiceActionParameters _jsonWebServiceActionParameters;
 

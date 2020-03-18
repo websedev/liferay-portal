@@ -17,6 +17,7 @@ package com.liferay.portal.workflow;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portlet.workflowdefinitions.action.WorkflowDefinitionPermissionChecker;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -45,11 +46,40 @@ public class WorkflowPermissionAdvice {
 				throw new PrincipalException();
 			}
 		}
+		else if (methodName.equals(_DEPLOY_WORKFLOW_DEFINITION_METHOD_NAME)) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (!WorkflowDefinitionPermissionChecker.
+					canPublishWorkflowDefinition(permissionChecker)) {
+
+				throw new PrincipalException();
+			}
+		}
+		else if (methodName.equals(_UPDATE_ACTIVE_METHOD_NAME)) {
+			boolean active = (Boolean)arguments[4];
+
+			if (active) {
+				PermissionChecker permissionChecker =
+						PermissionThreadLocal.getPermissionChecker();
+
+				if (!WorkflowDefinitionPermissionChecker.
+						canPublishWorkflowDefinition(permissionChecker)) {
+
+					throw new PrincipalException();
+				}
+			}
+		}
 
 		return proceedingJoinPoint.proceed();
 	}
 
 	private static final String _ASSIGN_WORKFLOW_TASK_TO_USER_METHOD_NAME =
 		"assignWorkflowTaskToUser";
+
+	private static final String _DEPLOY_WORKFLOW_DEFINITION_METHOD_NAME =
+		"deployWorkflowDefinition";
+
+	private static final String _UPDATE_ACTIVE_METHOD_NAME = "updateActive";
 
 }

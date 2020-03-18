@@ -347,6 +347,8 @@ public interface PropsKeys {
 
 	public static final String CACHE_CONTENT_THRESHOLD_SIZE = "cache.content.threshold.size";
 
+	public static final String CACHE_FILE_NAME_CONTRIBUTORS = "cache.file.name.contributors";
+
 	public static final String CALENDAR_EMAIL_EVENT_REMINDER_BODY = "calendar.email.event.reminder.body";
 
 	public static final String CALENDAR_EMAIL_EVENT_REMINDER_ENABLED = "calendar.email.event.reminder.enabled";
@@ -1267,6 +1269,8 @@ public interface PropsKeys {
 
 	public static final String JPA_PROVIDER_PROPERTY_PREFIX = "jpa.provider.property.";
 
+	public static final String JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES = "json.deserialization.whitelist.class.names";
+
 	public static final String JSON_DESERIALIZER_STRICT_MODE = "json.deserializer.strict.mode";
 
 	public static final String JSON_SERVICE_AUTH_TOKEN_ENABLED = "json.service.auth.token.enabled";
@@ -1280,6 +1284,8 @@ public interface PropsKeys {
 	public static final String JSON_WEB_SERVICE_ENABLED = "json.web.service.enabled";
 
 	public static final String JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS = "jsonws.web.service.invalid.http.methods";
+
+	public static final String JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES = "jsonws.web.service.parameter.type.whitelist.class.names";
 
 	public static final String JSONWS_WEB_SERVICE_PATHS_EXCLUDES = "jsonws.web.service.paths.excludes";
 
@@ -2790,6 +2796,8 @@ public interface PropsKeys {
 	public static final String WIKI_PAGE_TITLES_REMOVE_REGEXP = "wiki.page.titles.remove.regexp";
 
 	public static final String WIKI_RSS_ABSTRACT_LENGTH = "wiki.rss.abstract.length";
+
+	public static final String WORKFLOW_COMPANY_ADMINISTRATOR_CAN_PUBLISH = "workflow.company.administrator.can.publish";
 
 	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
 

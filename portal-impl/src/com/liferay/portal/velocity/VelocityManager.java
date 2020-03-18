@@ -31,7 +31,6 @@ import java.util.Map;
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.util.introspection.SecureUberspector;
 
 /**
  * @author Raymond Augé
@@ -122,7 +121,7 @@ public class VelocityManager extends BaseTemplateManager {
 
 		extendedProperties.setProperty(
 			RuntimeConstants.UBERSPECT_CLASSNAME,
-			SecureUberspector.class.getName());
+			LiferaySecureUberspector.class.getName());
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,

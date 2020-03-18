@@ -2104,6 +2104,8 @@ public class PropsValues {
 
 	public static final int WIKI_RSS_ABSTRACT_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.WIKI_RSS_ABSTRACT_LENGTH));
 
+	public static final boolean WORKFLOW_COMPANY_ADMINISTRATOR_CAN_PUBLISH = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WORKFLOW_COMPANY_ADMINISTRATOR_CAN_PUBLISH));
+
 	public static final boolean XML_SECURITY_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XML_SECURITY_ENABLED));
 
 	public static final boolean XML_VALIDATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XML_VALIDATION_ENABLED));

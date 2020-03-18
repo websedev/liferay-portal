@@ -282,6 +282,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil">
 		<priority value="ERROR" />
 	</category>
@@ -834,6 +838,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.template.URLResourceParser">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.theme.ThemeLoader">
 		<priority value="INFO" />
 	</category>
@@ -1215,10 +1223,6 @@
 	</category>
 
 	<category name="org.apache.commons.fileupload">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.commons.httpclient">
 		<priority value="ERROR" />
 	</category>
 

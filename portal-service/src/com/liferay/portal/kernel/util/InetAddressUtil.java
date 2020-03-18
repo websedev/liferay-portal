@@ -83,6 +83,18 @@ public class InetAddressUtil {
 		return InetAddress.getByName("127.0.0.1");
 	}
 
+	public static boolean isLocalInetAddress(InetAddress inetAddress) {
+		if (inetAddress.isAnyLocalAddress() ||
+			inetAddress.isLinkLocalAddress() ||
+			inetAddress.isLoopbackAddress() ||
+			inetAddress.isSiteLocalAddress()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(InetAddressUtil.class);
 
 	private static class LocalHostNameHolder {

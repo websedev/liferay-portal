@@ -1053,10 +1053,7 @@
 			<preferences-validator>org.portletbridge.portlet.PortletBridgePortletValidator</preferences-validator>
 		</portlet-preferences>
 		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
+			<role-name>administrator</role-name>
 		</security-role-ref>
 	</portlet>
 	<portlet>

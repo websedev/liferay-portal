@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
+page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
+page import="com.liferay.portlet.workflowdefinitions.action.WorkflowDefinitionPermissionChecker" %>
 
 <%@ include file="/html/portlet/workflow_definitions/init-ext.jsp" %>

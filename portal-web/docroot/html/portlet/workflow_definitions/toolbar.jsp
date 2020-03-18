@@ -22,27 +22,29 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 <aui:nav-bar>
 	<aui:nav>
-		<portlet:renderURL var="viewDefinitionsURL">
-			<portlet:param name="struts_action" value="/workflow_definitions/view" />
-			<portlet:param name="tabs1" value="workflow-definitions" />
-		</portlet:renderURL>
+		<c:if test="<%= WorkflowDefinitionPermissionChecker.canPublishWorkflowDefinition(permissionChecker) %>">
+			<portlet:renderURL var="viewDefinitionsURL">
+				<portlet:param name="struts_action" value="/workflow_definitions/view" />
+				<portlet:param name="tabs1" value="workflow-definitions" />
+			</portlet:renderURL>
 
-		<portlet:renderURL var="addWorkflowDefinitionURL">
-			<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-			<portlet:param name="tabs1" value="workflow-definitions" />
-			<portlet:param name="redirect" value="<%= viewDefinitionsURL %>" />
-			<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
-		</portlet:renderURL>
+			<portlet:renderURL var="addWorkflowDefinitionURL">
+				<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
+				<portlet:param name="tabs1" value="workflow-definitions" />
+				<portlet:param name="redirect" value="<%= viewDefinitionsURL %>" />
+				<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
+			</portlet:renderURL>
 
-		<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+			<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
 
-			<%
-			String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
-			%>
+				<%
+				String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
+				%>
 
-			<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' />
+				<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' />
+			</c:if>
+			<aui:nav-item href="<%= addWorkflowDefinitionURL %>" iconCssClass="icon-upload" label="upload-definition" selected='<%= toolbarItem.equals("add") %>' />
 		</c:if>
-		<aui:nav-item href="<%= addWorkflowDefinitionURL %>" iconCssClass="icon-upload" label="upload-definition" selected='<%= toolbarItem.equals("add") %>' />
 	</aui:nav>
 </aui:nav-bar>
 

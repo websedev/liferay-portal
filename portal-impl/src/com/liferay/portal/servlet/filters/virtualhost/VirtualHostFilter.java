@@ -164,7 +164,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		String contextPath = PortalUtil.getPathContext();
 
-		String originalFriendlyURL = request.getRequestURI();
+		String originalFriendlyURL = HttpUtil.normalizePath(
+			request.getRequestURI());
 
 		String friendlyURL = originalFriendlyURL;
 
@@ -179,9 +180,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 		if (pos != -1) {
 			friendlyURL = friendlyURL.substring(0, pos);
 		}
-
-		friendlyURL = StringUtil.replace(
-			friendlyURL, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 		String i18nLanguageId = null;
 

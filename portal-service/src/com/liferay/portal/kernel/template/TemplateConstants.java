@@ -21,6 +21,12 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public interface TemplateConstants {
 
+	public static final String[] ALLOWED_LANG_TYPES = {
+		TemplateConstants.LANG_TYPE_CSS, TemplateConstants.LANG_TYPE_FTL,
+		TemplateConstants.LANG_TYPE_TPL, TemplateConstants.LANG_TYPE_VM,
+		TemplateConstants.LANG_TYPE_XSL
+	};
+
 	public static final String CLASS_NAME_ID = "class_name_id";
 
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
@@ -33,6 +39,8 @@ public interface TemplateConstants {
 	public static final String LANG_TYPE_CSS = "css";
 
 	public static final String LANG_TYPE_FTL = "ftl";
+
+	public static final String LANG_TYPE_TPL = "tpl";
 
 	public static final String LANG_TYPE_VM = "vm";
 

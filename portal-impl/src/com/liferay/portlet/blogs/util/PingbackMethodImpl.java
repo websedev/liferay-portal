@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,6 +50,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.IOException;
 
+import java.net.InetAddress;
 import java.net.URL;
 
 import java.util.HashMap;
@@ -89,12 +91,6 @@ public class PingbackMethodImpl implements Method {
 				"Pingbacks are disabled");
 		}
 
-		Response response = validateSource();
-
-		if (response != null) {
-			return response;
-		}
-
 		try {
 			BlogsEntry entry = getBlogsEntry(companyId);
 
@@ -102,6 +98,12 @@ public class PingbackMethodImpl implements Method {
 				return XmlRpcUtil.createFault(
 					XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
 					"Pingbacks are disabled");
+			}
+
+			Response response = validateSource();
+
+			if (response != null) {
+				return response;
 			}
 
 			long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
@@ -316,6 +318,10 @@ public class PingbackMethodImpl implements Method {
 	protected Response validateSource() {
 		Source source = null;
 
+		if (_isSourceURILocalNetwork()) {
+			return XmlRpcUtil.createFault(ACCESS_DENIED, "Access Denied");
+		}
+
 		try {
 			String html = HttpUtil.URLtoString(_sourceUri);
 
@@ -339,6 +345,22 @@ public class PingbackMethodImpl implements Method {
 
 		return XmlRpcUtil.createFault(
 			SOURCE_URI_INVALID, "Could not find target URI in source");
+	}
+
+	private boolean _isSourceURILocalNetwork() {
+		try {
+			URL url = new URL(_sourceUri);
+
+			return InetAddressUtil.isLocalInetAddress(
+				InetAddress.getByName(url.getHost()));
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PingbackMethodImpl.class);

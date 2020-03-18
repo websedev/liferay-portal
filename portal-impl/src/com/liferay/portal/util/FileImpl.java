@@ -64,9 +64,9 @@ import java.util.concurrent.Future;
 import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.pdfbox.exceptions.CryptographyException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.Tika;
+import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -361,17 +361,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		String text = null;
 
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
-
 		try {
-			if (contextClassLoader != portalClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
-			}
-
-			Tika tika = new Tika();
+			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 
 			tika.setMaxStringLength(maxStringLength);
 
@@ -402,8 +393,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		catch (Exception e) {
 			Throwable throwable = ExceptionUtils.getRootCause(e);
 
-			if ((throwable instanceof CryptographyException) ||
-				(throwable instanceof EncryptedDocumentException) ||
+			if ((throwable instanceof EncryptedDocumentException) ||
 				(throwable instanceof UnsupportedZipFeatureException)) {
 
 				if (_log.isWarnEnabled()) {
@@ -419,11 +409,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 			else {
 				_log.error(e, e);
-			}
-		}
-		finally {
-			if (contextClassLoader != portalClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 
@@ -1092,7 +1077,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		@Override
 		public String call() throws ProcessException {
-			Tika tika = new Tika();
+			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 
 			try {
 				return tika.parseToString(
@@ -1106,6 +1091,21 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		private static final long serialVersionUID = 1L;
 
 		private byte[] _data;
+
+	}
+
+	private static class TikaConfigHolder {
+
+		private static final TikaConfig _tikaConfig;
+
+		static {
+			try {
+				_tikaConfig = new TikaConfig();
+			}
+			catch (Exception e) {
+				throw new ExceptionInInitializerError(e);
+			}
+		}
 
 	}
 
