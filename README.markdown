@@ -1,8 +1,14 @@
 # Information
 
-This fork provides security patches for Liferay Portal. For more information about security in Liferay Portal, please see [https://portal.liferay.dev/learn/security](https://portal.liferay.dev/learn/security).
+This branch provides security patches for Liferay Portal 6.2.5. For more
+information about security in Liferay Portal, please see
+[https://portal.liferay.dev/learn/security](https://portal.liferay.dev/learn/security).
 
-The [March 2020](https://github.com/--link-to-the-diff-patch--) release contains fixes for the following issues:
+**Cumulative diff patch:**  
+[https://github.com/community-security-team/liferay-portal/compare/6.2.5-ga6...6.2.5-cumulative.patch](https://github.com/community-security-team/liferay-portal/compare/6.2.5-ga6...6.2.5-cumulative.patch)
+
+The [March 2020](https://github.com/community-security-team/liferay-portal/commit/c6064cdd58967e4096a249b8901a80d4002e1b77)
+release contains fixes for the following issues:  
 [CST-6237](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/118642329),
 [CST-6238](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/118642734),
 [CST-6239](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/118653736),
@@ -27,6 +33,16 @@ The [March 2020](https://github.com/--link-to-the-diff-patch--) release contains
 [CST-7141](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/118081039),
 [CST-7205](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/117954271),
 [LPS-67683](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764471)
+
+Previous release(s) contains fixes for the following issues:  
+[CST-7018](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764556),
+[LPS-64438](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764217),
+[LPS-64440](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764229),
+[LPS-64441](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764241),
+[LPS-64442](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764253),
+[LPS-64443](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764265),
+[LPS-64444](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764277),
+[LPS-64547](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/113764289)
 
 # Liferay Portal Community Edition License
 
