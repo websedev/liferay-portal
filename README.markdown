@@ -1,8 +1,14 @@
 # Information
 
-This fork provides security patches for Liferay Portal. For more information about security in Liferay Portal, please see [https://portal.liferay.dev/learn/security](https://portal.liferay.dev/learn/security).
+This fork provides security patches for Liferay Portal 7.1.3. For more
+information about security in Liferay Portal, please see
+[https://portal.liferay.dev/learn/security](https://portal.liferay.dev/learn/security).
 
-The [March 2020](https://github.com/--link-to-the-diff-patch--) release contains fixes for the following issues:
+**Cumulative diff patch:**  
+[https://github.com/community-security-team/liferay-portal/compare/7.1.3-ga4...7.1.3-cumulative.patch](https://github.com/community-security-team/liferay-portal/compare/7.1.3-ga4...7.1.3-cumulative.patch)
+
+The [March 2020](https://github.com/community-security-team/liferay-portal/commit/94535daf406162f259fccceff14357cf91513078)
+release contains fixes for the following issues:  
 [CST-7132](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/117954449),
 [CST-7133](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/118080791),
 [CST-7135](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/118080894),
