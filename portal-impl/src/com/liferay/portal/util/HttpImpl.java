@@ -1609,7 +1609,7 @@ public class HttpImpl implements Http {
 			_cookies.set(null);
 
 			HttpHost targetHttpHost = new HttpHost(
-				uri.getHost(), uri.getPort());
+				uri.getHost(), uri.getPort(), uri.getScheme());
 
 			RequestConfig.Builder requestConfigBuilder =
 				getRequestConfigBuilder(uri, timeout);

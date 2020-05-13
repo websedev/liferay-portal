@@ -74,17 +74,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 			String content = HttpUtil.URLtoString(options);
 
 			if (Validator.isNotNull(content)) {
-				int x = content.indexOf("access_token=");
-
-				if (x >= 0) {
-					int y = content.indexOf(CharPool.AMPERSAND, x);
-
-					if (y < x) {
-						y = content.length();
-					}
-
-					return content.substring(x + 13, y);
-				}
+				return JSONFactoryUtil.createJSONObject(content).getString("access_token");
 			}
 		}
 		catch (Exception e) {
