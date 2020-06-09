@@ -8,17 +8,17 @@ information about security in Liferay Portal, please see
 [https://github.com/community-security-team/liferay-portal/compare/7.2.1-ga2...7.2.1-cumulative.patch](https://github.com/community-security-team/liferay-portal/compare/7.2.1-ga2...7.2.1-cumulative.patch)
 
 The [June 2020]() release contains fixes for the following issues:
-[CST-7213](),
-[CST-7214](),
-[CST-7216](),
-[CST-7217](),
-[CST-7218](),
-[CST-7219](),
-[CST-7220](),
-[CST-7221](),
-[CST-7301](),
-[CST-7302](),
-[CST-7303]()
+[CST-7213](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119317427),
+[CST-7214](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119317439),
+[CST-7216](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119318646),
+[CST-7217](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119319717),
+[CST-7218](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119319747),
+[CST-7219](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119320878),
+[CST-7220](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119324436),
+[CST-7221](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119326522),
+[CST-7301](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119317396),
+[CST-7302](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119317411),
+[CST-7303](https://portal.liferay.dev/learn/security/known-vulnerabilities/-/asset_publisher/HbL5mxmVrnXW/content/id/119326567)
 
 # Liferay Portal Community Edition License
 
